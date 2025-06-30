@@ -520,14 +520,41 @@
           <h2 style="color: #333;">Our Trusted Partners</h2>
         </div>
         
-        <div class="clients-grid" data-aos="fade-up" data-aos-delay="200" style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: center;">
-          <img src="assets/img/clients/client-1.png" alt="Client 1" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
-          <img src="assets/img/clients/client-2.png" alt="Client 2" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
-          <img src="assets/img/clients/client-3.png" alt="Client 3" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
-          <img src="assets/img/clients/client-4.png" alt="Client 4" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
-          <img src="assets/img/clients/client-5.png" alt="Client 5" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
-          <img src="assets/img/clients/client-6.png" alt="Client 6" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
-          <img src="assets/img/clients/client-7.png" alt="Client 7" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;">
+        <div class="clients-slider swiper init-swiper" data-aos="fade-up" data-aos-delay="200">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "slidesPerView": 5,
+              "spaceBetween": 30,
+              "autoplay": { "delay": 2000, "disableOnInteraction": false },
+              "navigation": { "nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev" },
+              "pagination": { "el": ".swiper-pagination", "clickable": true },
+              "breakpoints": {
+                "1200": { "slidesPerView": 5 },
+                "992": { "slidesPerView": 4 },
+                "768": { "slidesPerView": 3 },
+                "576": { "slidesPerView": 2 },
+                "0": { "slidesPerView": 1 }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="assets/img/clients/client-1.png" alt="Client 1" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-2.png" alt="Client 2" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-3.png" alt="Client 3" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-4.png" alt="Client 4" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-5.png" alt="Client 5" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-6.png" alt="Client 6" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-7.png" alt="Client 7" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client-8.png" alt="Client 8" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client9.png" alt="Client 9" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client10.png" alt="Client 10" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client11.png" alt="Client 11" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client12.png" alt="Client 12" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+          </div>
+          <div class="swiper-button-next" style="color: #ff6600;"></div>
+          <div class="swiper-button-prev" style="color: #ff6600;"></div>
+          <div class="swiper-pagination" style="bottom: -30px;"></div>
         </div>
       </div>
     </section>

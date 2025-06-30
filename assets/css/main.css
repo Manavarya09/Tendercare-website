@@ -1812,14 +1812,14 @@ section,
 # Clients Section
 --------------------------------------------------------------*/
 .clients .swiper-slide img {
-  opacity: 0.5;
+  opacity: 1 !important;
+  filter: none !important;
   transition: 0.3s;
-  filter: grayscale(100);
 }
 
 .clients .swiper-slide img:hover {
-  filter: none;
-  opacity: 1;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 .clients .swiper-wrapper {
@@ -3479,6 +3479,110 @@ html {
   }
   
   .client-logo {
+    max-height: 50px;
+    max-width: 100px;
+  }
+}
+
+/* Enhanced Clients Section with Slider */
+.clients.section {
+  background: #ffffff !important;
+  padding: 60px 0;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.clients-slider {
+  position: relative;
+  padding: 20px 0 50px 0;
+}
+
+.clients-slider .swiper-wrapper {
+  align-items: center;
+}
+
+.clients-slider .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.clients-slider .swiper-slide img {
+  max-height: 80px;
+  max-width: 160px;
+  transition: all 0.3s ease;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.clients-slider .swiper-slide:hover img {
+  transform: scale(1.1);
+}
+
+/* Swiper Navigation */
+.clients-slider .swiper-button-next,
+.clients-slider .swiper-button-prev {
+  color: #ff6600;
+  background: rgba(255, 255, 255, 0.9);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.clients-slider .swiper-button-next:hover,
+.clients-slider .swiper-button-prev:hover {
+  background: #ff6600;
+  color: white;
+  transform: scale(1.1);
+}
+
+.clients-slider .swiper-button-next::after,
+.clients-slider .swiper-button-prev::after {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Swiper Pagination */
+.clients-slider .swiper-pagination {
+  position: relative;
+  bottom: -30px;
+}
+
+.clients-slider .swiper-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #ddd;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.clients-slider .swiper-pagination .swiper-pagination-bullet-active {
+  background: #ff6600;
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .clients-slider .swiper-slide img {
+    max-height: 60px;
+    max-width: 120px;
+  }
+  .clients-slider .swiper-button-next,
+  .clients-slider .swiper-button-prev {
+    width: 35px;
+    height: 35px;
+  }
+  .clients-slider .swiper-button-next::after,
+  .clients-slider .swiper-button-prev::after {
+    font-size: 16px;
+  }
+}
+@media (max-width: 576px) {
+  .clients-slider .swiper-slide img {
     max-height: 50px;
     max-width: 100px;
   }
