@@ -1,0 +1,10 @@
+{
+  "name": "Ignite",
+  "type": "FIRE",
+  "energy": 3,
+  "metadata": {
+    "effect": "burn",
+    "duration": 5,
+    "visual": "flame"
+  }
+} 

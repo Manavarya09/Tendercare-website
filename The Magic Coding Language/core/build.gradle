@@ -1,0 +1,17 @@
+apply plugin: 'antlr'
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "org.antlr:antlr4-runtime:$antlrVersion"
+    implementation "org.xerial:sqlite-jdbc:$sqliteVersion"
+    antlr "org.antlr:antlr4:$antlrVersion"
+}
+
+sourceSets.main.java.srcDirs += 'build/generated-src/antlr/main'
+
+tasks.generateGrammarSource {
+    outputDirectory = file("$buildDir/generated-src/antlr/main/sorceryscript/dsl")
+    arguments += ["-package", "sorceryscript.dsl"]
+}
+
+compileJava.dependsOn generateGrammarSource 

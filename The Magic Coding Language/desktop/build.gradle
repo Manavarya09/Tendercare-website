@@ -1,0 +1,9 @@
+apply plugin: 'application'
+
+mainClassName = 'sorceryscript.desktop.DesktopLauncher'
+
+run {
+    if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+        jvmArgs += ['-XstartOnFirstThread']
+    }
+} 

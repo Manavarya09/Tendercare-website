@@ -1,0 +1,47 @@
+buildscript {
+    ext {
+        appName = 'SorceryScript'
+        gdxVersion = '1.12.0'
+        javaVersion = JavaVersion.VERSION_17
+        antlrVersion = '4.13.1'
+        sqliteVersion = '3.42.0.0'
+    }
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+}
+
+project(':core') {
+    dependencies {
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "org.antlr:antlr4-runtime:$antlrVersion"
+        implementation "org.xerial:sqlite-jdbc:$sqliteVersion"
+    }
+}
+
+project(':desktop') {
+    dependencies {
+        implementation project(':core')
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    }
+} 

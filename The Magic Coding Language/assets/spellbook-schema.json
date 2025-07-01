@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Spellbook",
+  "type": "object",
+  "properties": {
+    "spells": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "energy": { "type": "integer" },
+          "metadata": { "type": "object" }
+        },
+        "required": ["name", "type", "energy", "metadata"]
+      }
+    }
+  },
+  "required": ["spells"]
+} 
