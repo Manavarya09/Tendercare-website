@@ -1,0 +1,26 @@
+-- SQLite schema for Book a Demo form
+CREATE TABLE IF NOT EXISTS demo_bookings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customerName TEXT NOT NULL,
+    orgName TEXT NOT NULL,
+    contactDetails TEXT NOT NULL,
+    countryCode TEXT,
+    preferredContact TEXT NOT NULL,
+    numUsers INTEGER NOT NULL,
+    numDoctors INTEGER NOT NULL,
+    specialties TEXT,
+    numBranches INTEGER,
+    newPurchase INTEGER DEFAULT 0,
+    demoRequest INTEGER DEFAULT 0,
+    softwareUpgrade INTEGER DEFAULT 0,
+    integrationInquiry INTEGER DEFAULT 0,
+    pricingRequest INTEGER DEFAULT 0,
+    customizationRequest INTEGER DEFAULT 0,
+    otherInquiry INTEGER DEFAULT 0,
+    otherInquiryText TEXT,
+    existingSoftware TEXT,
+    serverPref TEXT,
+    demoDate TEXT,
+    budget TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); 

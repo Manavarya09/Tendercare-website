@@ -1,3 +1,11 @@
+<!--
+  =============================================
+  🌟🌟 DESIGNED & DEVELOPED BY MANAV ARYA SINGH 🌟🌟
+  =============================================
+  This website template was designed & developed
+  entirely by Manav Arya Singh.
+  =============================================
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +15,8 @@
   <title>Tendercare</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
+  <meta name="author" content="Manav Arya Singh">
+  <meta name="copyright" content="Manav Arya Singh">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -27,11 +37,125 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <style>
+    .sent-message {
+      display: none;
+      background: #e6ffed;
+      color: #218838;
+      border: 2px solid #28a745;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.1em;
+      margin-top: 18px;
+      box-shadow: 0 2px 8px rgba(40,167,69,0.08);
+    }
+    /* Glowing orange border animation */
+    @keyframes orange-glow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255,102,0,0.5), 0 0 0 0 rgba(255,179,71,0.3);
+      }
+      50% {
+        box-shadow: 0 0 24px 8px rgba(255,102,0,0.7), 0 0 48px 16px rgba(255,179,71,0.4);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255,102,0,0.5), 0 0 0 0 rgba(255,179,71,0.3);
+      }
+    }
+    .glow-border {
+      border: 3px solid #ff6600;
+      border-radius: 18px;
+      animation: orange-glow 2s infinite;
+      box-shadow: 0 0 0 0 rgba(255,102,0,0.5), 0 0 0 0 rgba(255,179,71,0.3);
+      transition: box-shadow 0.3s;
+    }
+    /* Sleek top progress bar */
+    .top-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 4px;
+      background: transparent;
+      z-index: 9999;
+    }
+    .top-progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+      border-radius: 0 8px 8px 0;
+      transition: width 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    /* Get In Touch form progress bar */
+    .form-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #ffe5cc;
+      border-radius: 6px;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    .form-progress-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+      border-radius: 6px;
+      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .floating-call-btn {
+      position: fixed;
+      left: 32px;
+      bottom: 32px;
+      z-index: 9999;
+      background: linear-gradient(135deg, #ff6600 0%, #ffb347 100%);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(255,102,0,0.18);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    .floating-call-btn:hover {
+      box-shadow: 0 8px 24px rgba(255,102,0,0.28);
+      background: linear-gradient(135deg, #ffb347 0%, #ff6600 100%);
+      color: #fff;
+    }
+    .btn-getstarted {
+      background: linear-gradient(90deg, #ff7300 0%, #ff6600 100%);
+      color: #fff !important;
+      border: none;
+      border-radius: 24px;
+      font-weight: 700;
+      padding: 10px 28px;
+      font-size: 1.08em;
+      box-shadow: 0 2px 8px rgba(255,102,0,0.10);
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn-getstarted:hover, .btn-getstarted:focus {
+      background: linear-gradient(90deg, #ff6600 0%, #ff7300 100%);
+      color: #fff !important;
+      box-shadow: 0 4px 16px rgba(255,102,0,0.18);
+      text-decoration: none;
+    }
+  </style>
 
 </head>
 
 <body class="index-page">
 
+  <!--
+  =============================
+  Designed & Developed by Manav Arya Singh
+  =============================
+-->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
@@ -42,6 +166,7 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="#products">Products</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
@@ -50,11 +175,17 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="#contact">Book a Demo</a>
+      <a class="btn-getstarted" href="demo-form.html" target="_blank" rel="noopener">Book a Demo</a>
+      <!-- committed by Manav Arya Singh -->
 
     </div>
   </header>
 
+  <!--
+  =============================
+  Designed & Developed by Manav Arya Singh
+  =============================
+-->
   <main class="main">
 
     <!-- Hero Section -->
@@ -65,10 +196,11 @@
         <div class="row align-items-center">
           <div class="col-lg-6">
             <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-              <div class="company-badge mb-4">
-                <i class="bi bi-heart-pulse-fill me-2"></i>
+              <div class="company-badge mb-4 innovative-badge">
+                <i class="bi bi-heart-pulse-fill me-2 pulse-icon"></i>
                 Medical Software Solutions
               </div>
+              <!-- committed by Manav Arya Singh -->
 
               <h1 class="mb-4">
                 Being a doctor isn't <br>
@@ -78,12 +210,13 @@
               </h1>
 
               <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary me-0 me-sm-2 mx-1">Book a Demo</a>
+                <a href="demo-form.html" class="btn btn-primary me-0 me-sm-2 mx-1">Book a Demo</a>
                 <a href="https://www.youtube.com/watch?v=H0qaLBR8HW8" class="btn btn-link mt-2 mt-sm-0 glightbox">
                   <i class="bi bi-play-circle me-1"></i>
                   Play Video
                 </a>
               </div>
+              <!-- committed by Manav Arya Singh -->
             </div>
           </div>
 
@@ -105,7 +238,7 @@
               </div>
               <div class="stat-content">
                 <h4>AI-Integrated</h4>
-                <p class="mb-0">Open Ai Medel</p>
+                <p class="mb-0">Powered By DiagnosisPro</p>
               </div>
             </div>
           </div>
@@ -175,7 +308,7 @@
               </div>
               <h3>My Clinic App</h3>
               <p>Self-service patient engagement and communication platform</p>
-              <a href="#" class="btn-getstarted">Learn More</a>
+              <a href="https://myclinic.app/login" class="btn-getstarted" target="_blank" rel="noopener">Learn More</a>
             </div>
           </div>
           <!-- committed by Manav Arya Singh -->
@@ -188,7 +321,7 @@
               </div>
               <h3>BeautifulYou.today</h3>
               <p>A curated list of the best beauty and wellness clinics in Dubai. Tap on a clinic to view their services and team.</p>
-              <a href="#" class="btn-getstarted">Learn More</a>
+              <a href="https://beautifulyou.today" class="btn-getstarted" target="_blank" rel="noopener">Learn More</a>
             </div>
           </div>
           <!-- committed by Manav Arya Singh -->
@@ -201,7 +334,7 @@
               </div>
               <h3>Clients Pro</h3>
               <p>Cloud-based CRM for healthcare. Track and follow-up all leads so you don't lose a single client. Keep tabs on your cost, conversion and agent performance.</p>
-              <a href="#" class="btn-getstarted">Learn More</a>
+              <a href="https://clientspro.app/login" class="btn-getstarted" target="_blank" rel="noopener">Learn More</a>
             </div>
           </div>
           <!-- committed by Manav Arya Singh -->
@@ -214,7 +347,7 @@
               </div>
               <h3>How Happy</h3>
               <p>An online tool to survey clients visiting your business. The feedback survey is simple - five questions and five options from poor to excellent.</p>
-              <a href="#" class="btn-getstarted">Learn More</a>
+              <a href="http://howhappy.today/signup.html" class="btn-getstarted" target="_blank" rel="noopener">Learn More</a>
             </div>
           </div>
 
@@ -226,7 +359,7 @@
               </div>
               <h3>Our Staff</h3>
               <p>Simplify HR management. Track attendance, automate payroll, and manage employees with ease.</p>
-              <a href="#" class="btn-getstarted">Learn More</a>
+              <a href="https://ourstaff.app" class="btn-getstarted" target="_blank" rel="noopener">Learn More</a>
             </div>
           </div>
 
@@ -238,7 +371,7 @@
               </div>
               <h3>Diagnosis Pro</h3>
               <p>DiagnosisPro is a natural language processing (NLP) tool that uses machine learning to generate diagnoses from patient narratives.</p>
-              <a href="#" class="btn-getstarted">Learn More</a>
+              <a href="https://diagnosispro.app" class="btn-getstarted" target="_blank" rel="noopener">Learn More</a>
             </div>
           </div>
 
@@ -254,12 +387,12 @@
         <div class="row justify-content-center">
           <div class="col-12 text-center">
             <h3 style="color: #333; font-weight: 600; margin-bottom: 25px; font-size: 1.3rem;">Certified & Compliant Solutions</h3>
-            <div class="d-flex flex-row justify-content-center align-items-center flex-wrap" style="gap: 50px; max-width: 800px; margin: 0 auto; padding: 25px; background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(248,249,250,0.9)); border-radius: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.3);">
-              <div class="logo-item" style="transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
-                <img src="assets/img/nabidh.png" alt="NABIDH Logo" style="height:110px;max-width:320px;width:auto;object-fit:contain;filter: drop-shadow(0 6px 20px rgba(0,0,0,0.15)) brightness(1.05) contrast(1.1);background:transparent;display:block;" loading="lazy">
+            <div class="d-flex flex-row justify-content-center align-items-center flex-wrap" style="gap: 50px; max-width: 800px; margin: 0 auto; padding: 25px; background: none; border-radius: 0; border: none; box-shadow: none;">
+              <div class="logo-item" style="padding: 0; border-radius: 0; background: none; backdrop-filter: none; border: none; box-shadow: none; transition: none; overflow: visible;">
+                <img src="assets/img/nabidh.png" alt="NABIDH Logo" style="height:110px;max-width:320px;width:auto;object-fit:contain;background:transparent;display:block;filter:none;box-shadow:none;" loading="lazy">
               </div>
-              <div class="logo-item" style="transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 15px; border-radius: 15px; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);">
-                <img src="assets/img/malaffi.png" alt="Malaffi Logo" style="height:110px;max-width:320px;width:auto;object-fit:contain;filter: drop-shadow(0 6px 20px rgba(0,0,0,0.15)) brightness(1.05) contrast(1.1);background:transparent;display:block;" loading="lazy">
+              <div class="logo-item" style="padding: 0; border-radius: 0; background: none; backdrop-filter: none; border: none; box-shadow: none; transition: none; overflow: visible;">
+                <img src="assets/img/malaffi.png" alt="Malaffi Logo" style="height:110px;max-width:320px;width:auto;object-fit:contain;background:transparent;display:block;filter:none;box-shadow:none;" loading="lazy">
               </div>
             </div>
           </div>
@@ -286,10 +419,10 @@
               </div>
               <div class="feature-content">
                 <h4>AI-Powered Intelligence</h4>
-                <p>Advanced machine learning algorithms that learn from your practice data to provide intelligent insights and predictive analytics for better patient outcomes.</p>
+                <p> Integrated with DiagnosisPro to provide intelligent insights and predictive analytics for better patient outcomes.</p>
                 <ul class="feature-list">
-                  <li><i class="bi bi-check-circle"></i> Predictive diagnostics</li>
-                  <li><i class="bi bi-check-circle"></i> Smart appointment scheduling</li>
+                  <li><i class="bi bi-check-circle"></i> Predictive Diagnostics</li>
+                  <li><i class="bi bi-check-circle"></i> Smart Treatment Planning</li>
                   <li><i class="bi bi-check-circle"></i> Automated report generation</li>
                 </ul>
               </div>
@@ -308,7 +441,7 @@
                 <ul class="feature-list">
                   <li><i class="bi bi-check-circle"></i> Zero downtime deployments</li>
                   <li><i class="bi bi-check-circle"></i> Real-time data synchronization</li>
-                  <li><i class="bi bi-check-circle"></i> Global accessibility</li>
+                  <li><i class="bi bi-check-circle"></i> Services in UAE & KSA</li>
                 </ul>
               </div>
             </div>
@@ -322,10 +455,10 @@
               </div>
               <div class="feature-content">
                 <h4>Advanced Security</h4>
-                <p>Bank-level encryption and industry-standard compliance ensure your sensitive data is protected with the highest security standards in the industry.</p>
+                <p>Industry-standard compliance ensure your sensitive data is protected with the highest security standards in the industry.</p>
                 <ul class="feature-list">
-                  <li><i class="bi bi-check-circle"></i> End-to-end encryption</li>
-                  <li><i class="bi bi-check-circle"></i> Industry-standard compliant</li>
+                  <li><i class="bi bi-check-circle"></i> Regulatory and Industry-standard</li>
+                  <li><i class="bi bi-check-circle"></i> HIPAA compliant</li>
                   <li><i class="bi bi-check-circle"></i> Multi-factor authentication</li>
                 </ul>
             </div>
@@ -360,14 +493,13 @@
                 <h4>Web-Based & Modular Platform</h4>
                 <p>Access your practice management system from anywhere, on any device, with our secure, browser-based architecture. Easily customize and expand with specialty modules as your needs grow.</p>
                 <ul class="feature-list">
-                  <li><i class="bi bi-check-circle"></i> Internet-based, single installation for your entire hospital</li>
-                  <li><i class="bi bi-check-circle"></i> Modular structure: add or modify specialty modules as required</li>
+                  <li><i class="bi bi-check-circle"></i> Internet-based, single installation for your Clinic</li>
                   <li><i class="bi bi-check-circle"></i> Unlimited users can connect simultaneously</li>
                   <li><i class="bi bi-check-circle"></i> Compatible with all mobile devices (iPad, iPhone, Android, etc.)</li>
                 </ul>
               </div>
+              </div>
             </div>
-          </div>
 
           <!-- Feature 6: 24/7 Expert Support -->
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
@@ -436,7 +568,7 @@
               <h4>Enterprise Security</h4>
               <p>Military-grade security protocols with multi-layer encryption, ensuring your patient data remains protected at all times.</p>
               <div class="capability-stats">
-                <span class="stat">99.9%</span>
+                <span class="stat">99.99%</span>
                 <span class="stat-label">Uptime</span>
                 </div>
                 </div>
@@ -463,7 +595,7 @@
     <section id="features-2" class="features-2 section light-background">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="section-title text-center mb-5" data-aos="fade-up">
-          <h2>Mobile-First Healthcare Solutions</h2>
+          <h2>Mobile-Optimized Healthcare Solutions</h2>
           <p>Access your practice management system from anywhere with our powerful mobile applications designed for modern healthcare professionals.</p>
           </div>
 
@@ -486,10 +618,11 @@
                   <i class="bi bi-wifi-off"></i>
                 </div>
                 <div class="feature-content">
-                  <h4>Offline Mode</h4>
-                  <p>Continue working without internet. Critical features remain available offline and sync when connected.</p>
+                  <h4>Instant Notifications</h4>
+                  <p>Receive real-time alerts for appointments, lab results, and patient updates, keeping you informed and responsive at all times.</p>
                 </div>
               </div>
+              <!-- committed by Manav Arya Singh -->
 
               <div class="mobile-feature-card" data-aos="fade-up" data-aos-delay="400">
                 <div class="feature-icon-wrapper">
@@ -504,19 +637,17 @@
           </div>
 
           <!-- Right: Web App Image -->
-          <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-delay="200">
-            <div class="web-app-showcase" style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; min-height: 400px; display: flex; align-items: center; justify-content: center;">
-              <img src="assets/img/web-app.png" alt="Web Application Interface" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border: 2px solid rgba(255,255,255,0.2); border-radius: 15px; background: transparent; box-shadow: 0 15px 30px rgba(0,0,0,0.15);">
-            </div>
+          <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-delay="220">
+            <img src="assets/img/web-app.png" alt="Web Application Interface" style="max-width: 130%; height: auto; display: block; margin: 0 auto; border: none; border-radius: 0; background: transparent; box-shadow: none;">
           </div>
         </div>
       </div>
     </section><!-- /Features 2 Section -->
 
     <!-- Clients Logo Scroller Section -->
-    <section class="clients section" style="padding: 60px 0; background: #ffffff;">
+    <section class="clients section" style="padding: 6px 0 2px 0; background: #ffffff;">
       <div class="container" data-aos="fade-up">
-        <div class="section-title text-center mb-1">
+        <div class="section-title text-center mb-0" style="margin-bottom: 0; padding-bottom: 0; margin-top: 64px;">
           <h2 style="color: #333;">Our Trusted Partners</h2>
         </div>
         
@@ -526,31 +657,53 @@
               "loop": true,
               "slidesPerView": 5,
               "spaceBetween": 30,
-              "autoplay": { "delay": 2000, "disableOnInteraction": false },
+              "autoplay": { "delay": 1100, "disableOnInteraction": false },
               "navigation": { "nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev" },
-              "pagination": { "el": ".swiper-pagination", "clickable": true },
+              
               "breakpoints": {
-                "1200": { "slidesPerView": 5 },
+                "1200": { "slidesPerView": 6 },
                 "992": { "slidesPerView": 4 },
                 "768": { "slidesPerView": 3 },
                 "576": { "slidesPerView": 2 },
-                "0": { "slidesPerView": 1 }
+                "0": { "slidesPerView": 2 }
               }
             }
           </script>
           <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="assets/img/clients/client-1.png" alt="Client 1" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-2.png" alt="Client 2" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-3.png" alt="Client 3" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-4.png" alt="Client 4" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-5.png" alt="Client 5" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-6.png" alt="Client 6" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-7.png" alt="Client 7" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
-            <div class="swiper-slide"><img src="assets/img/clients/client-8.png" alt="Client 8" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client1.png" alt="Client 1" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client2.png" alt="Client 2" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client3.png" alt="Client 3" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client4.png" alt="Client 4" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client5.png" alt="Client 5" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client6.png" alt="Client 6" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client7.png" alt="Client 7" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client8.png" alt="Client 8" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
             <div class="swiper-slide"><img src="assets/img/clients/client9.png" alt="Client 9" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
             <div class="swiper-slide"><img src="assets/img/clients/client10.png" alt="Client 10" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
             <div class="swiper-slide"><img src="assets/img/clients/client11.png" alt="Client 11" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
             <div class="swiper-slide"><img src="assets/img/clients/client12.png" alt="Client 12" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client13.png" alt="Client 13" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client14.png" alt="Client 14" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client15.png" alt="Client 15" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client16.png" alt="Client 16" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client17.png" alt="Client 17" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client18.png" alt="Client 18" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client19.png" alt="Client 19" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client20.png" alt="Client 20" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client21.png" alt="Client 21" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client22.png" alt="Client 22" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client23.png" alt="Client 23" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client24.png" alt="Client 24" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client25.png" alt="Client 25" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client26.png" alt="Client 26" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client27.png" alt="Client 27" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client28.png" alt="Client 28" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client29.png" alt="Client 29" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client30.png" alt="Client 30" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client31.png" alt="Client 31" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client32.png" alt="Client 32" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client33.png" alt="Client 33" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
+            <div class="swiper-slide"><img src="assets/img/clients/client34.png" alt="Client 34" class="img-fluid client-logo" style="max-height:80px;max-width:160px;transition: all 0.3s ease;"></div>
           </div>
           <div class="swiper-button-next" style="color: #ff6600;"></div>
           <div class="swiper-button-prev" style="color: #ff6600;"></div>
@@ -561,121 +714,125 @@
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section dark-background">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonials</h2>
-        <p>Hear from healthcare professionals who have transformed their practices with our innovative medical software solutions.</p>
+        <h2 style="color: #14213d;">Testimonials</h2>
+        <p style="color: #14213d;">Hear from healthcare professionals who have transformed their practices with our innovative intelligent healthcare ecosystem.</p>
       </div><!-- End Section Title -->
 
       <div class="container">
-
-        <div class="row g-5">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="testimonial-item">
-              <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-              <h3>Dr. Sarah Johnson</h3>
-              <h4>Medical Director</h4>
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+        <div class="swiper testimonials-swiper init-swiper" data-aos="fade-up" data-aos-delay="100">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "slidesPerView": 3,
+              "spaceBetween": 32,
+              "autoplay": { "delay": 3500, "disableOnInteraction": false },
+              "navigation": { "nextEl": ".testimonials-swiper-next", "prevEl": ".testimonials-swiper-prev" },
+              "pagination": { "el": ".testimonials-swiper-pagination", "clickable": true },
+              "breakpoints": {
+                "992": { "slidesPerView": 3 },
+                "0": { "slidesPerView": 1 }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                <h3>Dr. Sarah Johnson</h3>
+                <h4>Medical Director</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Tendercare's medical software has revolutionized our practice management. The AI-powered diagnostics have improved our diagnostic accuracy by 40%, and the patient portal has significantly enhanced patient engagement.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
               </div>
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                <span>Tendercare's medical software has revolutionized our practice management. The AI-powered diagnostics have improved our diagnostic accuracy by 40%, and the patient portal has significantly enhanced patient engagement.</span>
-                <i class="bi bi-quote quote-icon-right"></i>
-              </p>
             </div>
-          </div><!-- End testimonial item -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="testimonial-item">
-              <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-              <h3>Dr. Michael Chen</h3>
-              <h4>Cardiologist</h4>
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                <h3>Dr. Michael Chen</h3>
+                <h4>Cardiologist</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>The integration capabilities are outstanding. We seamlessly connected with our existing systems and the cloud-based security gives us peace of mind knowing our patient data is protected.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
               </div>
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                <span>The integration capabilities are outstanding. We seamlessly connected with our existing systems and the cloud-based security gives us peace of mind knowing our patient data is protected.</span>
-                <i class="bi bi-quote quote-icon-right"></i>
-              </p>
             </div>
-          </div><!-- End testimonial item -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="testimonial-item">
-              <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-              <h3>Dr. Emily Rodriguez</h3>
-              <h4>Family Physician</h4>
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                <h3>Dr. Emily Rodriguez</h3>
+                <h4>Family Physician</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>As a family practice, we needed a solution that could handle multiple specialties. Tendercare's platform is intuitive and has reduced our administrative workload by 60%.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
               </div>
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                <span>As a family practice, we needed a solution that could handle multiple specialties. Tendercare's platform is intuitive and has reduced our administrative workload by 60%.</span>
-                <i class="bi bi-quote quote-icon-right"></i>
-              </p>
             </div>
-          </div><!-- End testimonial item -->
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="testimonial-item">
-              <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-              <h3>Dr. James Wilson</h3>
-              <h4>Hospital Administrator</h4>
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                <h3>Dr. James Wilson</h3>
+                <h4>Hospital Administrator</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>The 24/7 support and compliance features were crucial for our organization. The system has improved our data management coordination and reduced errors significantly.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
               </div>
-              <p>
-                <i class="bi bi-quote quote-icon-left"></i>
-                <span>The 24/7 support and compliance features were crucial for our organization. The system has improved our data management coordination and reduced errors significantly.</span>
-                <i class="bi bi-quote quote-icon-right"></i>
-              </p>
             </div>
-          </div><!-- End testimonial item -->
-
+          </div>
+          <div class="testimonials-swiper-next swiper-button-next" style="color: #ff6600;"></div>
+          <div class="testimonials-swiper-prev swiper-button-prev" style="color: #ff6600;"></div>
+          <div class="testimonials-swiper-pagination swiper-pagination" style="bottom: -30px;"></div>
         </div>
-
       </div>
-
-    </section><!-- /Testimonials Section -->
+    </section>
 
     <!-- Stats Section -->
-    <section id="stats" class="stats section">
+    <section id="stats" class="stats section" style="padding: 18px 0 10px 0;">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4">
 
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
+          <div class="col-lg-4 col-md-6">
+            <div class="stats-item text-center w-100 h-100" style="margin-bottom: 0; padding-bottom: 0;">
               <span data-purecounter-start="0" data-purecounter-end="132" data-purecounter-duration="1" class="purecounter"></span>
               <p>Clients</p>
             </div>
           </div><!-- End Stats Item -->
 
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="2640" data-purecounter-duration="1" class="purecounter"></span>
               <p>Active User</p>
             </div>
           </div><!-- End Stats Item -->
 
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="11024" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-6">
             <div class="stats-item text-center w-100 h-100">
               <span data-purecounter-start="0" data-purecounter-end="35" data-purecounter-duration="1" class="purecounter"></span>
               <p>Years of Operations</p>
             </div>
           </div><!-- End Stats Item -->
+          <!-- committed by Manav Arya Singh -->
 
         </div>
 
@@ -685,21 +842,18 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact section light-background">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
-        <p>Ready to transform your healthcare practice? Get in touch with our team to learn how our medical software solutions can benefit your organization.</p>
+        <p>Ready to transform your healthcare practice? Get in touch with our team to learn how our intelligent healthcare ecosystem can benefit your organization.</p>
       </div><!-- End Section Title -->
-
+      <!-- committed by Manav Arya Singh -->
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row g-4 g-lg-5">
           <div class="col-lg-5">
             <div class="info-box" data-aos="fade-up" data-aos-delay="200">
               <h3>Contact Info</h3>
               <p>Connect with our healthcare technology experts to discuss your practice's needs and discover how our solutions can streamline your operations.</p>
-
               <div class="info-item" data-aos="fade-up" data-aos-delay="300">
                 <div class="icon-box">
                   <i class="bi bi-geo-alt"></i>
@@ -710,18 +864,15 @@
                   <p>DUbai, UAE</p>
                 </div>
               </div>
-
               <div class="info-item" data-aos="fade-up" data-aos-delay="400">
                 <div class="icon-box">
                   <i class="bi bi-telephone"></i>
                 </div>
                 <div class="content">
                   <h4>Phone Number</h4>
-                  <p>+971 55 554 8855</p>
-                  <p>+971 54 252 6371</p>
+                  <p>+971 (4) 43267077</p>
                 </div>
               </div>
-
               <div class="info-item" data-aos="fade-up" data-aos-delay="500">
                 <div class="icon-box">
                   <i class="bi bi-envelope"></i>
@@ -729,89 +880,67 @@
                 <div class="content">
                   <h4>Email Address</h4>
                   <p>info@tendercare.com</p>
-                  <p>contact@tendercare.com</p>
+                  <p>support@tendercare.com</p>
+                </div>
+              </div>
+              <div class="info-item" data-aos="fade-up" data-aos-delay="600">
+                <div class="icon-box">
+                  <i class="bi bi-clock"></i>
+                </div>
+                <div class="content">
+                  <h4>Working Hours</h4>
+                  <p>Monday - Friday</p>
+                  <p>Time: 9AM - 6PM GST</p>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="col-lg-7">
-            <div class="contact-form" data-aos="fade-up" data-aos-delay="300">
-              <h3>Get In Touch</h3>
-              <p>Request a personalized demo or consultation to see how our medical software solutions can enhance your practice's efficiency and patient care.</p>
-
-              <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <div class="contact-form-progress-wrapper glow-border" style="position: relative;">
+              <div class="contact-form-progress-bar" style="position: absolute; top: 0; left: 0; height: 4px; width: 0; background: linear-gradient(90deg, #ff6600, #ffb347); border-radius: 4px 4px 0 0; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 2;"></div>
+              <form action="forms/contact.php" method="post" role="form" class="php-email-form contact-form">
+                <div class="form-progress-bar"><div class="form-progress-bar-inner" id="contactFormProgress"></div></div>
+                <h3>Get In Touch</h3>
+                <p>Request a personalized demo or consultation to see how our intelligent healthcare ecosystem can enhance your practice's efficiency and patient care.</p>
                 <div class="row gy-4">
-
                   <div class="col-md-6">
                     <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
                   </div>
-
                   <div class="col-md-6 ">
                     <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
                   </div>
-
                   <div class="col-12">
                     <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
                   </div>
-
                   <div class="col-12">
                     <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
                   </div>
-
                   <div class="col-12 text-center">
                     <div class="loading">Loading</div>
                     <div class="error-message"></div>
                     <div class="sent-message">Your message has been sent. Thank you!</div>
-
                     <button type="submit" class="btn">Send Message</button>
                   </div>
-
                 </div>
               </form>
-
             </div>
           </div>
-
         </div>
-
       </div>
-
-    </section><!-- /Contact Section -->
+    </section>
 
   </main>
 
+  <!--
+  =============================
+  Designed & Developed by Manav Arya Singh
+  =============================
+-->
   <footer id="footer" class="footer">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <div>
-          <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Tendercare</span>
-          </a>
-          <div class="footer-contact pt-3">
-              <p>505 Suntech Tower, Dubai Silicon Oasis</p>
-              <p>Dubai, UAE</p>
-              <p class="mt-3"><strong>Phone:</strong> <span> +971 55 554 8855</span></p>
-              <p><strong>Email:</strong> <span>info@tendercare.com</span></p>
-            </div>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Tendercare</strong> <span>All Rights Reserved</span></p>
+      <p class="mb-0">© Copyright <span>Tendercare FZE 2025.</span> All Rights Reserved</p>
+      <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
     </div>
-
   </footer>
 
   <!-- Scroll Top -->
@@ -828,6 +957,30 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- Floating Contact Button -->
+  <a href="#contact" class="floating-contact-btn" title="Contact Us">
+    <i class="bi bi-envelope-fill"></i>
+  </a>
+  <div class="top-progress-bar"><div class="top-progress-bar-inner"></div></div>
+
+  <script>
+    // Top progress bar scroll effect
+    function updateTopProgressBar() {
+      const bar = document.querySelector('.top-progress-bar-inner');
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = percent + '%';
+    }
+    window.addEventListener('scroll', updateTopProgressBar);
+    window.addEventListener('resize', updateTopProgressBar);
+    document.addEventListener('DOMContentLoaded', updateTopProgressBar);
+  </script>
+
+  <!-- Floating Call Button (ensure it's just before </body>) -->
+  <a href="#contact" class="floating-call-btn" title="Call or Contact Us">
+    <i class="bi bi-telephone-fill"></i>
+  </a>
 </body>
 
 </html>
