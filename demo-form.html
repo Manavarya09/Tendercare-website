@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,6 +102,7 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html#hero">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="index.html#products">Products</a></li>
           <li><a href="index.html#features">Features</a></li>
           <li><a href="index.html#testimonials">Testimonials</a></li>
@@ -151,7 +153,9 @@
               <div class="mb-4">
                 <div style="height: 8px; background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%); border-radius: 6px; width: 100%; margin-bottom: 1.5rem; opacity: 0.22;"></div>
               </div>
-              <form action="book-demo.php" method="post" class="php-email-form" autocomplete="off">
+              <form action="forms/contact.php" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
                 <div class="mb-4 demo-form-section-title demo-form-fadein">1. General Information</div>
                 <div class="row demo-form-fadein" style="row-gap: 0.4rem;">
                   <div class="col-12">
@@ -374,33 +378,34 @@
       </div>
     </section>
   </main>
-  <footer id="footer" class="footer mt-5">
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <div>
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Tendercare</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>505 Suntech Tower, Dubai Silicon Oasis</p>
-              <p>Dubai, UAE</p>
-              <p class="mt-3"><strong>Phone:</strong> <span> +971 (4) 43267077</span></p>
-              <p><strong>Email:</strong> <span>info@tendercare.com</span></p>
-            </div>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-      </div>
+  <footer id="footer" class="footer">
+    <div class="container copyright text-center mt-4 position-relative">
+      <p class="mb-0">© Copyright <span>Tendercare</span> All Rights Reserved</p>
+      <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
+      <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
     </div>
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Tendercare</strong> <span>All Rights Reserved</span></p>
-    </div>
+    <style>
+      .faq-footer-link {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 26px;
+        border-radius: 24px 8px 24px 8px;
+        font-size: 1.08em;
+        box-shadow: 0 4px 18px rgba(255,102,0,0.13);
+        text-decoration: none;
+        transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+        z-index: 10;
+      }
+      .faq-footer-link:hover {
+        background: linear-gradient(90deg, #ffb347 0%, #ff6600 100%);
+        color: #fff6f0;
+        box-shadow: 0 8px 32px rgba(255,102,0,0.22);
+      }
+    </style>
   </footer>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/main.js"></script>

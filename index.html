@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!--
   =============================================
   🌟🌟 DESIGNED & DEVELOPED BY MANAV ARYA SINGH 🌟🌟
@@ -76,7 +77,7 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 4px;
+      height: 10px;
       background: transparent;
       z-index: 9999;
     }
@@ -156,14 +157,14 @@
   Designed & Developed by Manav Arya Singh
   =============================
 -->
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top" data-aos="fade-down" data-aos-delay="100">
     <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0" data-aos="zoom-in" data-aos-delay="200">
         <img src="assets/img/tendercare-logo.png" alt="Tendercare Logo" class="logo-img">
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu" data-aos="fade-left" data-aos-delay="300">
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="about.html">About Us</a></li>
@@ -175,7 +176,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="demo-form.html" target="_blank" rel="noopener">Book a Demo</a>
+      <a class="btn-getstarted" href="demo-form.html" target="_blank" rel="noopener" data-aos="zoom-in" data-aos-delay="400">Book a Demo</a>
       <!-- committed by Manav Arya Singh -->
 
     </div>
@@ -638,7 +639,10 @@
 
           <!-- Right: Web App Image -->
           <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-delay="220">
-            <img src="assets/img/web-app.png" alt="Web Application Interface" style="max-width: 130%; height: auto; display: block; margin: 0 auto; border: none; border-radius: 0; background: transparent; box-shadow: none;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <img src="assets/img/web-app.png" alt="Web Application Interface" style="max-width: 130%; height: auto; display: block; margin: 0 auto; border: none; border-radius: 0; background: transparent; box-shadow: none;">
+              <div style="margin-top: 14px; font-size: 1.25rem; color: #14213d; font-weight: 800; letter-spacing: 0.5px; text-align: center;">Our Flagship software starting at just $10K</div>
+            </div>
           </div>
         </div>
       </div>
@@ -936,12 +940,36 @@
   Designed & Developed by Manav Arya Singh
   =============================
 -->
-  <footer id="footer" class="footer">
-    <div class="container copyright text-center mt-4">
-      <p class="mb-0">© Copyright <span>Tendercare FZE 2025.</span> All Rights Reserved</p>
-      <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
-    </div>
-  </footer>
+  
+<footer id="footer" class="footer">
+  <div class="container copyright text-center mt-4 position-relative">
+    <p class="mb-0">© Copyright <span>Tendercare</span> All Rights Reserved</p>
+    <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
+    <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
+  </div>
+  <style>
+    .faq-footer-link {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+      color: #fff;
+      font-weight: 600;
+      padding: 10px 26px;
+      border-radius: 24px 8px 24px 8px;
+      font-size: 1.08em;
+      box-shadow: 0 4px 18px rgba(255,102,0,0.13);
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      z-index: 10;
+    }
+    .faq-footer-link:hover {
+      background: linear-gradient(90deg, #ffb347 0%, #ff6600 100%);
+      color: #fff6f0;
+      box-shadow: 0 8px 32px rgba(255,102,0,0.22);
+    }
+  </style>
+</footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -958,29 +986,59 @@
   <script src="assets/js/main.js"></script>
 
   <!-- Floating Contact Button -->
-  <a href="#contact" class="floating-contact-btn" title="Contact Us">
+  <a href="#contact" class="floating-contact-btn" title="Contact Us" data-aos="zoom-in" data-aos-delay="1000">
     <i class="bi bi-envelope-fill"></i>
   </a>
   <div class="top-progress-bar"><div class="top-progress-bar-inner"></div></div>
 
-  <script>
-    // Top progress bar scroll effect
-    function updateTopProgressBar() {
-      const bar = document.querySelector('.top-progress-bar-inner');
-      const scrollTop = window.scrollY || window.pageYOffset;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      bar.style.width = percent + '%';
-    }
-    window.addEventListener('scroll', updateTopProgressBar);
-    window.addEventListener('resize', updateTopProgressBar);
-    document.addEventListener('DOMContentLoaded', updateTopProgressBar);
-  </script>
-
   <!-- Floating Call Button (ensure it's just before </body>) -->
-  <a href="#contact" class="floating-call-btn" title="Call or Contact Us">
+  <a href="#contact" class="floating-call-btn" title="Call or Contact Us" data-aos="zoom-in" data-aos-delay="1200">
     <i class="bi bi-telephone-fill"></i>
   </a>
+  <script>
+    // Ripple effect for Advanced Capabilities cards
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.capability-card').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          let ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          let rect = card.getBoundingClientRect();
+          ripple.style.left = (e.clientX - rect.left) + 'px';
+          ripple.style.top = (e.clientY - rect.top) + 'px';
+          ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+          card.appendChild(ripple);
+          setTimeout(function() { ripple.remove(); }, 600);
+        });
+      });
+    });
+  </script>
+  <script>
+    // Progress bar for Get In Touch form
+    function updateContactFormProgress() {
+      const form = document.querySelector('.php-email-form.contact-form');
+      if (!form) return;
+      const fields = [
+        form.querySelector('input[name="name"]'),
+        form.querySelector('input[name="email"]'),
+        form.querySelector('input[name="subject"]'),
+        form.querySelector('textarea[name="message"]')
+      ];
+      let filled = 0;
+      fields.forEach(f => { if (f && f.value.trim() !== '') filled++; });
+      const percent = (filled / fields.length) * 100;
+      var bar = document.getElementById('contactFormProgress');
+      if (bar) bar.style.width = percent + '%';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      updateContactFormProgress();
+      const form = document.querySelector('.php-email-form.contact-form');
+      if (form) {
+        form.querySelectorAll('input, textarea').forEach(el => {
+          el.addEventListener('input', updateContactFormProgress);
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>

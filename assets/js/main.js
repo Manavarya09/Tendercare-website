@@ -187,4 +187,19 @@
     }, 1500);
   });
 
+  /**
+   * Top Scroll Progress Bar
+   */
+  function updateTopProgressBar() {
+    var bar = document.querySelector('.top-progress-bar-inner');
+    if (!bar) return;
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = percent + '%';
+  }
+  window.addEventListener('scroll', updateTopProgressBar);
+  window.addEventListener('resize', updateTopProgressBar);
+  window.addEventListener('load', updateTopProgressBar);
+
 })();

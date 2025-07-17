@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      background: transparent !important;
     }
     main {
       flex: 1 0 auto;
@@ -60,9 +62,194 @@
       font-size: 1.1rem;
       line-height: 1.7;
     }
+    .leadership-section {
+      background: #fff;
+    }
+    .leader-card {
+      background: #f8fafc;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(20,33,61,0.06);
+      transition: box-shadow 0.2s, transform 0.2s;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 36px 18px 28px 18px;
+    }
+    .leader-card-lg {
+      min-height: 420px;
+    }
+    .leader-card:hover {
+      box-shadow: 0 12px 40px 0 rgba(255, 102, 0, 0.32), 0 2px 8px 0 rgba(255, 102, 0, 0.18);
+      transform: translateY(-4px) scale(1.035);
+    }
+    .leader-img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 10px solid #ff6600;
+      box-shadow: 0 0 0 6px #fff6f0, 0 4px 32px 0 rgba(255,102,0,0.25), 0 0 0 0 #ff6600;
+      background: #fff6f0;
+      margin-bottom: 22px;
+    }
+    .read-bio-link {
+      color: #ff6600;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.05em;
+      transition: color 0.2s;
+    }
+    .read-bio-link:hover {
+      color: #14213d;
+      text-decoration: underline;
+    }
+    .leader-name {
+      color: #14213d;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .leader-role {
+      color: #ff6600;
+      font-size: 1.08rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      text-align: center;
+    }
   </style>
+  <style>
+    /* Modal styles */
+    .bio-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(20,33,61,0.45);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+    .bio-modal-backdrop.active {
+      display: flex;
+    }
+    .bio-modal {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 48px rgba(20,33,61,0.18);
+      max-width: 720px;
+      width: 95vw;
+      min-height: 340px;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      overflow: hidden;
+      position: relative;
+      animation: modalPopIn 0.25s cubic-bezier(.39,.575,.565,1);
+    }
+    @keyframes modalPopIn {
+      0% { transform: scale(0.92) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .bio-modal-photo {
+      background: #fff6f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 220px;
+      max-width: 240px;
+      padding: 36px 18px;
+      border-right: 1.5px solid #ffe0c2;
+    }
+    .bio-modal-photo img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 10px solid #ff6600;
+      box-shadow: 0 0 0 6px #fff6f0, 0 4px 32px 0 rgba(255,102,0,0.25);
+      background: #fff6f0;
+    }
+    .bio-modal-content {
+      flex: 1;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .bio-modal-content h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #14213d;
+      margin-bottom: 10px;
+    }
+    .bio-modal-content .bio-role {
+      color: #ff6600;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+    .bio-modal-content p {
+      color: #444;
+      font-size: 1.13rem;
+      line-height: 1.7;
+    }
+    .bio-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      font-size: 2rem;
+      color: #ff6600;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+      transition: color 0.2s;
+    }
+    .bio-modal-close:hover {
+      color: #14213d;
+    }
+    @media (max-width: 700px) {
+      .bio-modal {
+        flex-direction: column;
+        max-width: 98vw;
+      }
+      .bio-modal-photo {
+        border-right: none;
+        border-bottom: 1.5px solid #ffe0c2;
+        min-width: 100%;
+        max-width: 100%;
+        padding: 24px 0 0 0;
+        justify-content: center;
+      }
+      .bio-modal-content {
+        padding: 24px 18px;
+      }
+    }
+  </style>
+  /* Blur effect for background when modal is open */
+  body.bio-modal-open > *:not(.bio-modal-backdrop) {
+    filter: blur(16px) brightness(0.92);
+    transition: filter 0.3s;
+    pointer-events: none;
+    user-select: none;
+  }
+  body.bio-modal-open .bio-modal-backdrop {
+    filter: none !important;
+    pointer-events: auto;
+    user-select: auto;
+  }
 </head>
 <body>
+  <div class="demo-form-bg-flow">
+    <svg viewBox="0 0 1440 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path class="wave1" d="M0,120 C360,180 1080,60 1440,120 L1440,180 L0,180 Z" fill="#ffb347" fill-opacity="0.18"/>
+      <path class="wave2" d="M0,160 C480,100 960,200 1440,140 L1440,180 L0,180 Z" fill="#ff6600" fill-opacity="0.12"/>
+    </svg>
+  </div>
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
@@ -83,13 +270,219 @@
     </div>
   </header>
 
-  <main class="main" style="margin-top: 100px;"></main>
+  <main class="main" style="margin-top: 100px;">
+    <section class="leadership-section py-5">
+      <div class="container">
+        <h2 class="text-center mb-5" style="font-weight:700; color:#14213d;">Our Leadership Team</h2>
+        <div class="row justify-content-center mb-4">
+          <!-- Top row: 2 big boxes -->
+          <div class="col-lg-6 mb-4">
+            <div class="leader-card leader-card-lg">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Dr. Naval Kishore">
+              <div class="leader-name">Dr. Naval Kishore</div>
+              <div class="leader-role">Director Management</div>
+              <a href="#" class="read-bio-link" data-leader="naval-kishore">Read Bio &rarr;</a>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4">
+            <div class="leader-card leader-card-lg">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Adarsh Kishore">
+              <div class="leader-name">Adarsh Kishore</div>
+              <div class="leader-role">Manager Management</div>
+              <a href="#" class="read-bio-link" data-leader="adarsh-kishore">Read Bio &rarr;</a>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-4">
+          <!-- Middle row: 3 boxes -->
+          <div class="col-lg-4 mb-4">
+            <div class="leader-card">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Anjaly">
+              <div class="leader-name">Anjaly</div>
+              <div class="leader-role">Team Leader Management</div>
+              <a href="#" class="read-bio-link" data-leader="anjaly">Read Bio &rarr;</a>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <div class="leader-card">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Christina Flores">
+              <div class="leader-name">Christina Flores</div>
+              <div class="leader-role">Senior Engineer Software</div>
+              <a href="#" class="read-bio-link" data-leader="christina-flores">Read Bio &rarr;</a>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <div class="leader-card">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Meghana">
+              <div class="leader-name">Meghana</div>
+              <div class="leader-role">Senior Engineer Software</div>
+              <a href="#" class="read-bio-link" data-leader="meghana">Read Bio &rarr;</a>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-4">
+          <!-- Bottom row: 3 boxes -->
+          <div class="col-lg-4 mb-4">
+            <div class="leader-card">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Mary Minu">
+              <div class="leader-name">Mary Minu</div>
+              <div class="leader-role">Senior Engineer Software</div>
+              <a href="#" class="read-bio-link" data-leader="mary-minu">Read Bio &rarr;</a>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <div class="leader-card">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Lencie Osil">
+              <div class="leader-name">Lencie Osil</div>
+              <div class="leader-role">Executive Assistant Management</div>
+              <a href="#" class="read-bio-link" data-leader="lencie-osil">Read Bio &rarr;</a>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <div class="leader-card">
+              <img class="leader-img" src="https://via.placeholder.com/160x160?text=Photo" alt="Amal Roji">
+              <div class="leader-name">Amal Roji</div>
+              <div class="leader-role">Driver Management</div>
+              <a href="#" class="read-bio-link" data-leader="amal-roji">Read Bio &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer id="footer" class="footer">
-    <div class="container copyright text-center mt-4">
+    <div class="container copyright text-center mt-4 position-relative">
       <p class="mb-0">© Copyright <span>Tendercare</span> All Rights Reserved</p>
-      <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;">Created by Manav Arya Singh</div>
+      <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
+      <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
     </div>
+    <style>
+      .faq-footer-link {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 26px;
+        border-radius: 24px 8px 24px 8px;
+        font-size: 1.08em;
+        box-shadow: 0 4px 18px rgba(255,102,0,0.13);
+        text-decoration: none;
+        transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+        z-index: 10;
+      }
+      .faq-footer-link:hover {
+        background: linear-gradient(90deg, #ffb347 0%, #ff6600 100%);
+        color: #fff6f0;
+        box-shadow: 0 8px 32px rgba(255,102,0,0.22);
+      }
+    </style>
   </footer>
+  <!-- Bio Modal Popup -->
+  <div class="bio-modal-backdrop" id="bioModalBackdrop">
+    <div class="bio-modal" id="bioModal">
+      <button class="bio-modal-close" id="bioModalClose" aria-label="Close">&times;</button>
+      <div class="bio-modal-photo">
+        <img id="bioModalPhoto" src="https://via.placeholder.com/160x160?text=Photo" alt="Leader Photo">
+      </div>
+      <div class="bio-modal-content">
+        <h3 id="bioModalName">Leader Name</h3>
+        <div class="bio-role" id="bioModalRole">Leader Role</div>
+        <p id="bioModalText">This is a sample bio. The real bio will appear here when you click on a leader. You can update this text for each leader as needed.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Example leader data (replace with real bios/photos as needed)
+    const leaderBios = {
+      'naval-kishore': {
+        name: 'Dr. Naval Kishore',
+        role: 'Director Management',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Dr. Naval Kishore is the Director of Management at Tendercare. He brings over 20 years of experience in healthcare leadership and innovation.'
+      },
+      'adarsh-kishore': {
+        name: 'Adarsh Kishore',
+        role: 'Manager Management',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Adarsh Kishore manages the operations and ensures smooth delivery of services at Tendercare.'
+      },
+      'anjaly': {
+        name: 'Anjaly',
+        role: 'Team Leader Management',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Anjaly leads the management team and oversees project execution.'
+      },
+      'christina-flores': {
+        name: 'Christina Flores',
+        role: 'Senior Engineer Software',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Christina Flores is a senior software engineer with expertise in healthcare technology.'
+      },
+      'meghana': {
+        name: 'Meghana',
+        role: 'Senior Engineer Software',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Meghana is a senior engineer specializing in software development and system integration.'
+      },
+      'mary-minu': {
+        name: 'Mary Minu',
+        role: 'Senior Engineer Software',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Mary Minu is a senior engineer with a focus on software quality and reliability.'
+      },
+      'lencie-osil': {
+        name: 'Lencie Osil',
+        role: 'Executive Assistant Management',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Lencie Osil supports the management team and coordinates executive tasks.'
+      },
+      'amal-roji': {
+        name: 'Amal Roji',
+        role: 'Driver Management',
+        photo: 'https://via.placeholder.com/160x160?text=Photo',
+        bio: 'Amal Roji is responsible for logistics and transportation at Tendercare.'
+      }
+    };
+
+    // Modal logic
+    const bioModalBackdrop = document.getElementById('bioModalBackdrop');
+    const bioModalClose = document.getElementById('bioModalClose');
+    const bioModalPhoto = document.getElementById('bioModalPhoto');
+    const bioModalName = document.getElementById('bioModalName');
+    const bioModalRole = document.getElementById('bioModalRole');
+    const bioModalText = document.getElementById('bioModalText');
+
+    document.querySelectorAll('.read-bio-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const leader = this.getAttribute('data-leader');
+        const data = leaderBios[leader];
+        if (data) {
+          bioModalPhoto.src = data.photo;
+          bioModalName.textContent = data.name;
+          bioModalRole.textContent = data.role;
+          bioModalText.textContent = data.bio;
+        }
+        bioModalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('bio-modal-open');
+      });
+    });
+    bioModalClose.addEventListener('click', function() {
+      bioModalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+      document.body.classList.remove('bio-modal-open');
+    });
+    bioModalBackdrop.addEventListener('click', function(e) {
+      if (e.target === bioModalBackdrop) {
+        bioModalBackdrop.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.classList.remove('bio-modal-open');
+      }
+    });
+  </script>
 </body>
 </html> 

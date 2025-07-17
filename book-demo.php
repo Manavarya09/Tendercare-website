@@ -1,4 +1,35 @@
 <?php
+// IMPORTANT: In your HTML form, add:
+// <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+// <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+session_start();
+$config = require __DIR__ . '/forms/config.php';
+
+// Disable error reporting in production
+if (getenv('APP_ENV') !== 'development') {
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    error_reporting(0);
+}
+
+// CSRF token check
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        http_response_code(403);
+        die('Invalid CSRF token.');
+    }
+    // Honeypot check
+    if (!empty($_POST['website'])) {
+        http_response_code(400);
+        die('Spam detected.');
+    }
+}
+
+// Generate CSRF token for form
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -6,7 +37,6 @@ require_once __DIR__ . '/assets/vendor/phpmailer/src/PHPMailer.php';
 require_once __DIR__ . '/assets/vendor/phpmailer/src/SMTP.php';
 require_once __DIR__ . '/assets/vendor/phpmailer/src/Exception.php';
 
-// Collect form data
 function post($key) {
     return isset($_POST[$key]) ? trim($_POST[$key]) : '';
 }
@@ -29,21 +59,21 @@ foreach ($possible_inquiries as $key => $label) {
 $inquiry_type_str = implode(', ', $inquiry_types);
 
 $fields = [
-    'Customer Name' => post('customerName'),
-    'Organization Name' => post('orgName'),
-    'Email' => post('contactDetails'),
-    'Phone Country Code' => isset($_POST['countryCode']) ? $_POST['countryCode'] : '+971',
-    'Phone Number' => post('preferredContact'),
-    'Number of Users' => post('numUsers'),
-    'Number of Doctors' => post('numDoctors'),
-    'Specialties' => post('specialties'),
-    'Number of Branches' => post('numBranches'),
+    'Customer Name' => filter_input(INPUT_POST, 'customerName', FILTER_SANITIZE_STRING),
+    'Organization Name' => filter_input(INPUT_POST, 'orgName', FILTER_SANITIZE_STRING),
+    'Email' => filter_input(INPUT_POST, 'contactDetails', FILTER_VALIDATE_EMAIL),
+    'Phone Country Code' => isset($_POST['countryCode']) ? htmlspecialchars($_POST['countryCode']) : '+971',
+    'Phone Number' => filter_input(INPUT_POST, 'preferredContact', FILTER_SANITIZE_STRING),
+    'Number of Users' => filter_input(INPUT_POST, 'numUsers', FILTER_SANITIZE_STRING),
+    'Number of Doctors' => filter_input(INPUT_POST, 'numDoctors', FILTER_SANITIZE_STRING),
+    'Specialties' => filter_input(INPUT_POST, 'specialties', FILTER_SANITIZE_STRING),
+    'Number of Branches' => filter_input(INPUT_POST, 'numBranches', FILTER_SANITIZE_STRING),
     'Inquiry Type(s)' => $inquiry_type_str,
-    'Other Inquiry Text' => post('otherInquiryText'),
-    'Existing Software' => post('existingSoftware'),
-    'Server Preference' => post('serverPref'),
-    'Preferred Demo Date' => post('demoDate'),
-    'Budget' => post('budget'),
+    'Other Inquiry Text' => filter_input(INPUT_POST, 'otherInquiryText', FILTER_SANITIZE_STRING),
+    'Existing Software' => filter_input(INPUT_POST, 'existingSoftware', FILTER_SANITIZE_STRING),
+    'Server Preference' => filter_input(INPUT_POST, 'serverPref', FILTER_SANITIZE_STRING),
+    'Preferred Demo Date' => filter_input(INPUT_POST, 'demoDate', FILTER_SANITIZE_STRING),
+    'Budget' => filter_input(INPUT_POST, 'budget', FILTER_SANITIZE_STRING),
 ];
 
 $html = '<html><body style="font-family: Arial, sans-serif; background: #f8fafc; padding: 24px;">';
@@ -61,33 +91,27 @@ $html .= '</body></html>';
 
 $mail = new PHPMailer(true);
 try {
-    // Server settings
     $mail->isSMTP();
-    $mail->Host = 'mail.tendercare.ae';
+    $mail->Host = $config['smtp_host'];
     $mail->SMTPAuth = true;
-    $mail->Username = 'sales@tendercare.ae';
-    $mail->Password = 'Tender302025';
+    $mail->Username = $config['smtp_username'];
+    $mail->Password = $config['smtp_password'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
-
-    // Recipients
-    $mail->setFrom('sales@tendercare.ae', 'Tendercare Website');
-    $mail->addAddress($fields['Email']); // Send to the user
-    $mail->addAddress('sales@tendercare.ae'); // Send a copy to sales
+    $mail->Port = $config['smtp_port'];
+    $mail->setFrom($config['smtp_username'], 'Tendercare Website');
+    $mail->addAddress($fields['Email']);
+    $mail->addAddress($config['receiving_email_address']);
     if (filter_var($fields['Email'], FILTER_VALIDATE_EMAIL)) {
       $mail->addReplyTo($fields['Email']);
     }
-    // Embed the logo
     $logoPath = __DIR__ . '/assets/img/tendercare-logo.png';
     $logoCid = 'tendercare-logo';
     $logoHtml = '';
     if (file_exists($logoPath)) {
       $logoHtml = '<img src="cid:' . $logoCid . '" alt="Tendercare Logo" width="160" style="display: block; margin: 0 auto 18px auto;">';
     }
-    // Content
     $mail->isHTML(true);
     $mail->Subject = 'Thank You for Your Response';
-    // Build HTML body (same as contact form)
     $body = $logoHtml;
     $body .= '<table cellpadding="10" cellspacing="0" style="background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(255,102,0,0.08); border: 1.5px solid #ffb347; width: 100%; max-width: 600px; margin: 0 auto;">';
     foreach ($fields as $label => $value) {
@@ -100,59 +124,11 @@ try {
     $body .= '<p style="color: #888; font-size: 0.95em; margin-top: 18px; text-align:center;">This message was sent from the Book a Demo form on your website.</p>';
     $mail->Body = $body;
     $mail->send();
-
-    // Send to sales@tendercare.ae
-    $mailSales = new PHPMailer(true);
-    try {
-      $mailSales->isSMTP();
-      $mailSales->Host = 'mail.tendercare.ae';
-      $mailSales->SMTPAuth = true;
-      $mailSales->Username = 'sales@tendercare.ae';
-      $mailSales->Password = 'Tender302025';
-      $mailSales->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-      $mailSales->Port = 465;
-      $mailSales->setFrom('sales@tendercare.ae', 'Tendercare Website');
-      $mailSales->addAddress('sales@tendercare.ae');
-      if (filter_var($fields['Email'], FILTER_VALIDATE_EMAIL)) {
-        $mailSales->addReplyTo($fields['Email']);
-      }
-      if (file_exists($logoPath)) {
-        $mailSales->addEmbeddedImage($logoPath, $logoCid);
-      }
-      $mailSales->isHTML(true);
-      $mailSales->Subject = 'Thank You for Your Response';
-      $mailSales->Body = $body;
-      $mailSales->send();
-    } catch (Exception $e) {
-      // Optionally log error
-    }
-
-    // Send to user
-    if (filter_var($fields['Email'], FILTER_VALIDATE_EMAIL)) {
-      $mailUser = new PHPMailer(true);
-      try {
-        $mailUser->isSMTP();
-        $mailUser->Host = 'mail.tendercare.ae';
-        $mailUser->SMTPAuth = true;
-        $mailUser->Username = 'sales@tendercare.ae';
-        $mailUser->Password = 'Tender302025';
-        $mailUser->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mailUser->Port = 465;
-        $mailUser->setFrom('sales@tendercare.ae', 'Tendercare Website');
-        $mailUser->addAddress($fields['Email']);
-        $mailUser->addReplyTo('sales@tendercare.ae');
-        if (file_exists($logoPath)) {
-          $mailUser->addEmbeddedImage($logoPath, $logoCid);
-        }
-        $mailUser->isHTML(true);
-        $mailUser->Subject = 'Thank You for Your Response';
-        $mailUser->Body = $body;
-        $mailUser->send();
-      } catch (Exception $e) {
-        // Optionally log error
-      }
-    }
     echo 'OK';
 } catch (Exception $e) {
     echo 'Mailer Error: ' . $mail->ErrorInfo;
-} 
+}
+// To use: In your HTML form, add:
+// <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+// <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+?> 

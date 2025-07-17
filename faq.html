@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQs | Tendercare</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #fff6f0 0%, #ffe0c2 100%);
+      min-height: 100vh;
+      font-family: var(--default-font, 'Inter', sans-serif);
+      color: #14213d;
+    }
+    .faq-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 16px 40px 16px;
+    }
+    .faq-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ff6600;
+      margin-bottom: 36px;
+      letter-spacing: 1px;
+    }
+    .faq-accordion {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(255,102,0,0.08);
+      overflow: hidden;
+    }
+    .faq-item {
+      border-bottom: 1.5px solid #ffe0c2;
+    }
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+    .faq-question {
+      cursor: pointer;
+      padding: 26px 32px 26px 24px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #ff6600;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s;
+      outline: none;
+    }
+    .faq-question:hover, .faq-question:focus {
+      background: #fff6f0;
+    }
+    .faq-toggle {
+      font-size: 1.7rem;
+      color: #ff6600;
+      transition: transform 0.2s;
+      margin-left: 18px;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      background: #fff6f0;
+      color: #333;
+      font-size: 1.08rem;
+      padding: 0 32px 0 32px;
+      transition: max-height 0.35s cubic-bezier(.39,.575,.565,1), padding 0.2s;
+    }
+    .faq-item.open .faq-answer {
+      padding: 0 32px 24px 32px;
+      max-height: 500px;
+      transition: max-height 0.5s cubic-bezier(.39,.575,.565,1), padding 0.2s;
+    }
+    .faq-back-btn {
+      position: fixed;
+      top: 28px;
+      left: 28px;
+      z-index: 100;
+      background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+      color: #fff;
+      font-weight: 600;
+      padding: 10px 26px;
+      border-radius: 24px 8px 24px 8px;
+      font-size: 1.08em;
+      box-shadow: 0 4px 18px rgba(255,102,0,0.13);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    }
+    .faq-back-btn:hover {
+      background: linear-gradient(90deg, #ffb347 0%, #ff6600 100%);
+      color: #fff6f0;
+      box-shadow: 0 8px 32px rgba(255,102,0,0.22);
+      text-decoration: none;
+    }
+    @media (max-width: 600px) {
+      .faq-title { font-size: 2rem; }
+      .faq-question { font-size: 1.05rem; padding: 18px 16px 18px 12px; }
+      .faq-answer { font-size: 0.98rem; padding: 0 16px 0 16px; }
+      .faq-item.open .faq-answer { padding: 0 16px 18px 16px; }
+      .faq-back-btn { top: 12px; left: 8px; padding: 8px 16px; font-size: 0.98em; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#" onclick="history.back(); return false;" class="faq-back-btn" title="Go Back">
+    <i class="bi bi-arrow-left"></i> Back
+  </a>
+  <div class="faq-container">
+    <div class="faq-title">Frequently Asked Questions</div>
+    <div class="faq-accordion" id="faqAccordion">
+      <!-- FAQ items start -->
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What is medical software?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Medical software refers to digital tools—like EHR, EMR, billing, and telemedicine systems—designed to support hospital, clinic, and practice operations by managing patient data, scheduling, billing, telehealth sessions, and more.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How does electronic health records (EHR) software work?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">EHR software digitizes patient medical histories, test results, treatment plans, and more, providing secure access for healthcare providers, facilitating communication between departments, and ensuring compliance with standards like HIPAA.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What is the difference between EHR and EMR software?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">EMR (Electronic Medical Record) systems store digital versions of paper charts for a single clinic or office. EHRs provide a broader, interoperable view—sharing data across multiple facilities for coordinated care.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Why choose cloud-based healthcare software?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Cloud-based solutions enable secure, remote access to medical data, support telemedicine, reduce on-premises IT costs, and offer automatic backups and scalable performance—ideal for modern clinics and hospitals.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Can TenderCare software help with medical billing?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. TenderCare includes robust medical billing software that handles invoicing, insurance claims, and payment tracking efficiently—reducing errors and speeding up reimbursements.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Is the software HIPAA compliant?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Absolutely. TenderCare ensures full HIPAA compliance, with strong encryption, access controls, audit trails, and secure data storage to meet regulatory requirements.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Does TenderCare provide telemedicine software?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. We offer secure telemedicine software that supports video consultations, patient messaging, and virtual care workflows—integrated seamlessly with your EHR system.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How does appointment scheduling software improve efficiency?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Our appointment scheduling software automates bookings, sends reminders via SMS/email, reduces no-shows, and syncs with clinician calendars to streamline patient flow and administrative tasks.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What benefits does AI bring to your medical software?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare’s AI-enhanced software can assist with diagnosis support, predictive analytics, inventory forecasting, and treatment recommendations—boosting clinical accuracy and operational efficiency.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Can I customize the medical software for my practice?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. We offer custom medical software development, tailoring modules for EHR, lab management, telemedicine, billing, and more to meet your specific workflows and integration needs.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Is there mobile access for practitioners?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Definitely. Our mobile medical app provides doctors and nurses secure, on-the-go access to patient records, appointments, test results, and teleconsultation tools.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What lab and radiology management features are included?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare includes dedicated lab management software for test ordering, results tracking, reporting, and instrument interfacing; plus radiology software solutions for imaging workflows and PACS integration.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How secure is patient data in TenderCare?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Security is a top priority: we use enterprise-grade secure health data software measures—encryption at rest and in transit, multi-factor authentication, and regular security audits.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Do you offer software training and support?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. We provide setup assistance, user training, ongoing technical support, and EHR integration services to ensure a smooth implementation and great user experience.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How do I choose the right hospital management system?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Consider key factors like feature coverage (EHR, billing, lab, telemedicine), HIPAA compliance, ease of integration, scalability, and vendor support—TenderCare offers all of these in one platform.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What are the top features in your software for clinics?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">
+          <ul style="margin:0 0 0 1.2em; padding:0;">
+            <li>Intuitive patient management system</li>
+            <li>Online appointment scheduling software</li>
+            <li>Integrated medical billing software</li>
+            <li>Secure EHR/EMR software</li>
+            <li>Cloud-based healthcare software and mobile access</li>
+            <li>Customizable workflows and reporting tools</li>
+          </ul>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Do you serve clients in the UAE or Middle East?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes! We deliver healthcare software in UAE, including EHR software tailored for Dubai and other Middle East regions, ensuring compliance with local regulations and language needs.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What makes TenderCare different from other medical software providers?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare offers a comprehensive, cloud-based medical software suite with fully customizable modules for EHR, billing, scheduling, telemedicine, lab, and pharmacy—designed for clinics and hospitals of all sizes, especially in the UAE and Middle East.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Does TenderCare offer multi-specialty clinic support?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. Our clinic management system supports multiple specialties like general medicine, dermatology, pediatrics, gynecology, and dentistry—all with separate workflows, prescription formats, and reports.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Can TenderCare be integrated with existing hospital systems?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Absolutely. TenderCare is designed for EHR integration, supporting HL7, FHIR, and custom APIs to connect with your lab systems, PACS, radiology tools, pharmacy inventory, and other third-party applications.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Does TenderCare offer multilingual support?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes, our system is optimized for both English and Arabic, with the ability to add more languages if required—ideal for healthcare providers in the UAE and GCC region.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How does TenderCare support teleconsultations?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare includes a built-in telemedicine platform that enables video calls, document sharing, e-prescriptions, and appointment scheduling—all through a secure and encrypted interface.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Is patient data stored securely in TenderCare?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. We follow strict data privacy standards, including end-to-end encryption, regular backups, role-based access control, and full HIPAA compliance to safeguard your patients’ information.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Can patients access their records using TenderCare?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes, we offer a patient portal where patients can view their medical records, book appointments, receive test results, and communicate with doctors securely.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What devices or platforms does TenderCare support?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare runs on web browsers, tablets, and mobile devices (Android & iOS), ensuring doctors and staff can access critical data from anywhere, anytime.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How scalable is TenderCare’s software?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare is highly scalable—it’s suitable for small clinics, multi-specialty centers, and large hospitals, with the ability to add new modules, users, and branches easily as your organization grows.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Does TenderCare provide analytics and reporting tools?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. We offer real-time analytics dashboards and custom reporting tools for patient records, revenue cycles, appointment trends, and resource utilization to support better decision-making.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How does TenderCare help reduce administrative workload?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">TenderCare automates routine processes like appointment booking, billing, inventory tracking, and lab test management, freeing up your staff’s time and reducing human error.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>How can I get a demo of the TenderCare system?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">You can request a free personalized demo by contacting our team through the website or emailing us. We’ll walk you through how TenderCare can be tailored to your practice.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Does TenderCare support online payments?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes, our system can be integrated with online payment gateways so that patients can pay for consultations, tests, and procedures directly through the patient portal.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>Can TenderCare help with insurance claims and processing?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">Yes. TenderCare includes an insurance claim management system that automates claim creation, submission, and tracking—reducing rejection rates and speeding up settlements.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false"><span>What kind of training and support does TenderCare offer?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer">We provide onboarding training, 24/7 customer support, a detailed user manual, and ongoing updates—ensuring that your staff is confident and your system stays up-to-date.</div>
+      </div>
+      <!-- FAQ items end -->
+    </div>
+  </div>
+  <script>
+    // FAQ accordion logic
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const item = this.parentElement;
+        const open = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!open) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html> 

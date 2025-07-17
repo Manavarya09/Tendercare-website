@@ -1,39 +1,73 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+session_start();
+$config = require __DIR__ . '/config.php';
 
-  $receiving_email_address = 'manavarya0178@gmail.com';
+// Disable error reporting in production
+if (getenv('APP_ENV') !== 'development') {
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    error_reporting(0);
+}
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+// CSRF token check
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        http_response_code(403);
+        die('Invalid CSRF token.');
+    }
+    // Honeypot check
+    if (!empty($_POST['website'])) {
+        http_response_code(400);
+        die('Spam detected.');
+    }
+}
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = isset($_POST['name']) ? $_POST['name'] : (isset($_POST['customerName']) ? $_POST['customerName'] : '');
-  $contact->from_email = isset($_POST['email']) ? $_POST['email'] : (isset($_POST['contactDetails']) ? $_POST['contactDetails'] : '');
-  $contact->subject = isset($_POST['subject']) ? $_POST['subject'] : 'Demo Form Submission';
+// Generate CSRF token for form
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
-  // Add all POST fields to the email in a consistent format
-  foreach ($_POST as $key => $value) {
+$receiving_email_address = $config['receiving_email_address'];
+
+if (file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php')) {
+    include($php_email_form);
+} else {
+    die('Unable to load the "PHP Email Form" Library!');
+}
+
+$contact = new PHP_Email_Form;
+$contact->ajax = true;
+$contact->to = $receiving_email_address;
+
+// Input validation and sanitization
+$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING) ?: (filter_input(INPUT_POST, 'customerName', FILTER_SANITIZE_STRING) ?: '');
+$email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) ?: (filter_input(INPUT_POST, 'contactDetails', FILTER_VALIDATE_EMAIL) ?: '');
+$subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_STRING) ?: 'Demo Form Submission';
+
+$contact->from_name = $name;
+$contact->from_email = $email;
+$contact->subject = $subject;
+
+foreach ($_POST as $key => $value) {
+    if ($key === 'csrf_token' || $key === 'website') continue; // skip security fields
     if (is_array($value)) {
-      $value = implode(', ', $value);
+        $value = implode(', ', array_map('htmlspecialchars', $value));
+    } else {
+        $value = htmlspecialchars($value);
     }
     $contact->add_message($value, ucfirst(str_replace(['_', '-'], ' ', $key)));
-  }
+}
 
-  $contact->smtp = array(
-    'host' => 'smtp.gmail.com',
-    'username' => 'sales@tendercare.com',
-    'password' => 'Tender302025',
-    'port' => '587',
-    'encryption' => 'tls'
-  );
+$contact->smtp = array(
+    'host' => $config['smtp_host'],
+    'username' => $config['smtp_username'],
+    'password' => $config['smtp_password'],
+    'port' => $config['smtp_port'],
+    'encryption' => $config['smtp_encryption']
+);
 
-  echo $contact->send();
+echo $contact->send();
+// To use: In your HTML form, add:
+// <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+// <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
 ?>

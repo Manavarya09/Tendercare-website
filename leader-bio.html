@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leader Bio | Tendercare</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    .bio-container { max-width: 700px; margin: 60px auto; background: #fff6f0; border-radius: 16px; box-shadow: 0 2px 16px rgba(20,33,61,0.06); padding: 40px; }
+    .bio-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #fff; box-shadow: 0 2px 8px rgba(255,102,0,0.08); background: #fff6f0; }
+    .bio-name { font-size: 2rem; font-weight: 700; color: #ff6600; margin-top: 18px; }
+    .bio-role { color: #14213d; font-size: 1.2rem; margin-bottom: 18px; }
+    .bio-desc { color: #333; font-size: 1.1rem; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="bio-container text-center">
+    <img id="bio-img" class="bio-img mb-3" src="" alt="Leader Photo">
+    <div class="bio-name" id="bio-name"></div>
+    <div class="bio-role" id="bio-role"></div>
+    <div class="bio-desc" id="bio-desc"></div>
+    <a href="about.html" class="btn btn-outline-primary mt-4">Back to Leadership</a>
+  </div>
+  <script>
+    // Leader data in new order, no phone numbers
+    const leaders = {
+      "naval-kishore": {
+        name: "Dr. Naval Kishore",
+        role: "Director\nManagement",
+        img: "https://randomuser.me/api/portraits/men/32.jpg",
+        desc: `Dr. Naval Kishore is a medical graduate, with post-graduate qualifications in management and information technology with more than 20 years experience in all the three fields. For the last 14 years he has been dealing with International agencies such as USAID, WHO, PATH, UNICEF and with the Indian Government agencies/ministries.\n\nHe has personally developed a large number of medical software applications. These include administrative programs and clinical software. He is also the author of the books Computers in Medicine and Internet for doctors. Both these books have been best-sellers on the Books Today list for several months and have received wide acclaim.`
+      },
+      "adarsh-kishore": {
+        name: "Adarsh Kishore",
+        role: "Manager\nManagement",
+        img: "https://randomuser.me/api/portraits/men/44.jpg",
+        desc: "Adarsh Kishore manages the core operations at Tendercare, ensuring smooth workflow and effective team coordination."
+      },
+      "lencie-osil": {
+        name: "Lencie Osil",
+        role: "Executive Assistant\nManagement",
+        img: "https://randomuser.me/api/portraits/women/81.jpg",
+        desc: "Lencie Osil supports the management team, ensuring all administrative tasks are handled efficiently."
+      },
+      "anjaly": {
+        name: "Anjaly",
+        role: "Team Leader Management",
+        img: "https://randomuser.me/api/portraits/women/68.jpg",
+        desc: "Anjaly leads the management team with a focus on collaboration and achieving organizational goals."
+      },
+      "christina-flores": {
+        name: "Christina Flores",
+        role: "Senior Engineer\nSoftware",
+        img: "https://randomuser.me/api/portraits/women/44.jpg",
+        desc: "Christina Flores is a Senior Software Engineer at Tendercare, specializing in robust and scalable healthcare solutions."
+      },
+      "mary-minu": {
+        name: "Mary Minu",
+        role: "Senior Engineer\nSoftware",
+        img: "https://randomuser.me/api/portraits/women/85.jpg",
+        desc: "Mary Minu is a Senior Software Engineer, dedicated to developing innovative solutions for Tendercare's clients."
+      },
+      "meghana": {
+        name: "Meghana",
+        role: "Senior Engineer\nSoftware",
+        img: "https://randomuser.me/api/portraits/women/86.jpg",
+        desc: "Meghana is a Senior Software Engineer at Tendercare, with expertise in modern web and mobile technologies."
+      },
+      "amal-roji": {
+        name: "Amal Roji",
+        role: "Driver\nManagement",
+        img: "https://randomuser.me/api/portraits/men/65.jpg",
+        desc: "Amal Roji oversees all driver operations, focusing on safety, efficiency, and reliability in service delivery."
+      }
+    };
+
+    // Get leader ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const leader = leaders[id];
+
+    if (leader) {
+      document.getElementById('bio-img').src = leader.img;
+      document.getElementById('bio-img').alt = leader.name;
+      document.getElementById('bio-name').textContent = leader.name;
+      document.getElementById('bio-role').innerHTML = leader.role.replace(/\n/g, '<br>');
+      document.getElementById('bio-desc').textContent = leader.desc;
+    } else {
+      document.querySelector('.bio-container').innerHTML = '<h2>Leader not found</h2><a href="about.html" class="btn btn-outline-primary mt-4">Back to Leadership</a>';
+    }
+  </script>
+</body>
+</html> 

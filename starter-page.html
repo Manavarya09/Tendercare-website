@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -175,7 +176,7 @@
       </div>
     </div>
 
-    <div class="container copyright text-center mt-4">
+    <div class="container copyright text-center mt-4 position-relative">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Tendercare</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
@@ -184,7 +185,30 @@
         <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a>
       </div>
+      <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
     </div>
+    <style>
+      .faq-footer-link {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 26px;
+        border-radius: 24px 8px 24px 8px;
+        font-size: 1.08em;
+        box-shadow: 0 4px 18px rgba(255,102,0,0.13);
+        text-decoration: none;
+        transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+        z-index: 10;
+      }
+      .faq-footer-link:hover {
+        background: linear-gradient(90deg, #ffb347 0%, #ff6600 100%);
+        color: #fff6f0;
+        box-shadow: 0 8px 32px rgba(255,102,0,0.22);
+      }
+    </style>
 
   </footer>
 
