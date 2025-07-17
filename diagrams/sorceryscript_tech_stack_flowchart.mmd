@@ -1,1 +1,24 @@
-SorceryScript_Tech_Stack_Flowchart
+graph TD
+    subgraph Core
+        A[SorceryScriptGame] -- "Initializes" --> B(MainWindow);
+        B -- "Contains" --> C(CodeEditorPane);
+        B -- "Contains" --> D(BattleArenaPane);
+        C -- "Sends script to" --> E(SpellInterpreter);
+        E -- "Uses" --> F(ANTLR);
+        D -- "Renders" --> G(ParticleEngine);
+        H(Spellbook) -- "Contains" --> I(Spell);
+        E -- "Executes" --> I;
+    end
+
+    subgraph Multiplayer
+        J(Server) -- "Communicates with" --> K(Client);
+    end
+
+    A -- "Can be" --> K;
+    A -- "Can be" --> J;
+
+    subgraph Data
+        L(SQLite) -- "Stores" --> H;
+    end
+
+    A -- "Uses" --> L;

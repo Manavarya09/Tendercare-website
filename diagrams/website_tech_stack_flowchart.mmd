@@ -1,1 +1,15 @@
-Website_Tech_Stack_Flowchart
+graph TD
+    subgraph User Interface
+        A[index.html] -- "Styling" --> B(assets/css/main.css);
+        A -- "Functionality" --> C(assets/js/main.js);
+        C -- "Uses" --> D(Swiper.js);
+        C -- "Uses" --> E(GLightbox.js);
+        C -- "Uses" --> F(AOS.js);
+        C -- "Uses" --> G(PureCounter.js);
+    end
+
+    subgraph Backend
+        H(forms/contact.php) -- "Sends Email" --> I(SMTP Server);
+    end
+
+    A -- "Submits Form" --> H;
