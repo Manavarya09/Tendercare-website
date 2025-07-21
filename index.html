@@ -859,36 +859,36 @@
               <h3>Contact Info</h3>
               <p>Connect with our healthcare technology experts to discuss your practice's needs and discover how our solutions can streamline your operations.</p>
               <div class="info-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="icon-box">
+                <button type="button" class="icon-box icon-box-clickable btn btn-link p-0 m-0 border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#locationMapModal" style="box-shadow:none;outline:none;">
                   <i class="bi bi-geo-alt"></i>
-                </div>
+                </button>
                 <div class="content">
-                  <h4>Our Location</h4>
+                  <span style="cursor:pointer;color:inherit;font-weight:bold;display:inline-block;" data-bs-toggle="modal" data-bs-target="#locationMapModal">Our Location</span>
                   <p>505 Suntech Tower, Dubai Silicon Oasis</p>
                   <p>DUbai, UAE</p>
                 </div>
               </div>
               <div class="info-item" data-aos="fade-up" data-aos-delay="400">
-                <div class="icon-box">
+                <a href="tel:+971443267077" class="icon-box icon-box-clickable btn btn-link p-0 m-0 border-0 bg-transparent" style="box-shadow:none;outline:none;">
                   <i class="bi bi-telephone"></i>
-                </div>
+                </a>
                 <div class="content">
                   <h4>Phone Number</h4>
-                  <p>+971 (4) 43267077</p>
+                  <p><a href="tel:+971443267077" style="color:inherit;text-decoration:underline;">+971 (4) 43267077</a></p>
                 </div>
               </div>
               <div class="info-item" data-aos="fade-up" data-aos-delay="500">
-                <div class="icon-box">
+                <a href="mailto:info@tendercare.com" class="icon-box icon-box-clickable btn btn-link p-0 m-0 border-0 bg-transparent" style="box-shadow:none;outline:none;">
                   <i class="bi bi-envelope"></i>
-                </div>
+                </a>
                 <div class="content">
                   <h4>Email Address</h4>
-                  <p>info@tendercare.com</p>
-                  <p>support@tendercare.com</p>
+                  <p><a href="mailto:info@tendercare.com" style="color:inherit;text-decoration:underline;">info@tendercare.com</a></p>
+                  <p><a href="mailto:support@tendercare.com" style="color:inherit;text-decoration:underline;">support@tendercare.com</a></p>
                 </div>
               </div>
               <div class="info-item" data-aos="fade-up" data-aos-delay="600">
-                <div class="icon-box">
+                <div>
                   <i class="bi bi-clock"></i>
                 </div>
                 <div class="content">
@@ -903,6 +903,12 @@
             <div class="contact-form-progress-wrapper glow-border" style="position: relative;">
               <div class="contact-form-progress-bar" style="position: absolute; top: 0; left: 0; height: 4px; width: 0; background: linear-gradient(90deg, #ff6600, #ffb347); border-radius: 4px 4px 0 0; transition: width 0.3s cubic-bezier(0.4,0,0.2,1); z-index: 2;"></div>
               <form action="forms/contact.php" method="post" role="form" class="php-email-form contact-form">
+                <input type="hidden" name="csrf_token" id="csrf_token">
+                <!-- Honeypot field (hidden from users) -->
+                <div style="display:none;">
+                  <label for="website_hp">Leave this field empty</label>
+                  <input type="text" name="website_hp" id="website_hp" autocomplete="off">
+                </div>
                 <div class="form-progress-bar"><div class="form-progress-bar-inner" id="contactFormProgress"></div></div>
                 <h3>Get In Touch</h3>
                 <p>Request a personalized demo or consultation to see how our intelligent healthcare ecosystem can enhance your practice's efficiency and patient care.</p>
@@ -933,6 +939,22 @@
       </div>
     </section>
 
+    <!-- Location Map Modal -->
+    <div class="modal fade" id="locationMapModal" tabindex="-1" aria-labelledby="locationMapModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="locationMapModalLabel"><i class="bi bi-geo-alt me-2"></i>Our Location</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="height:400px;">
+            <iframe
+              src="https://www.google.com/maps?q=505+Suntech+Tower,+Dubai+Silicon+Oasis,+Dubai,+UAE&output=embed"
+              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!--
@@ -1037,6 +1059,19 @@
           el.addEventListener('input', updateContactFormProgress);
         });
       }
+    });
+  </script>
+  <script>
+    // Fetch CSRF token and set it in the contact form
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('forms/get-csrf-token.php')
+        .then(response => response.text())
+        .then(token => {
+          var csrfInput = document.getElementById('csrf_token');
+          if (csrfInput) {
+            csrfInput.value = token;
+          }
+        });
     });
   </script>
 </body>

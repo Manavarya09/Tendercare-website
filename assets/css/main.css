@@ -1384,7 +1384,7 @@ section,
   top: 20%;
   left: -10%;
   width: 45%;
-  border: 8px solid var(--surface-color);
+  border: 1.5px solid var(--surface-color);
 }
 
 @media (max-width: 992px) {
@@ -2446,8 +2446,14 @@ section,
 
 .contact .info-item {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
   margin-bottom: 2rem;
+}
+.contact .info-item .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .contact .info-item:last-child {
@@ -4382,4 +4388,65 @@ input.no-spinner[type=number] {
     transform: scale(4);
     opacity: 0;
   }
+}
+
+.icon-box-clickable {
+  border: 2px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  background: color-mix(in srgb, var(--accent-color), transparent 92%);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 0;
+}
+.icon-box-clickable i {
+  font-size: 22px;
+  color: var(--accent-color);
+}
+.icon-box-clickable:focus, .icon-box-clickable:hover {
+  border-color: var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.leader-img {
+  border: 3px solid var(--accent-color) !important;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.bio-modal-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  width: 180px;
+  margin: 0 auto 18px auto;
+  background: #fff6f0;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px rgba(255, 102, 0, 0.10), 0 1.5px 8px rgba(20, 33, 61, 0.08);
+  position: relative;
+}
+.bio-modal-photo img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--accent-color);
+  background: #ffe5cc;
+  box-shadow: 0 2px 12px rgba(255, 102, 0, 0.08);
+  display: block;
+}
+
+.contact .info-item:last-child > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.5rem;
+  height: 3.5rem;
+}
+.contact .info-item:last-child .content {
+  justify-content: center;
 }
