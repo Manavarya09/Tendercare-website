@@ -1,17 +1,11 @@
 <?php
-require_once __DIR__ . '/config.php';
-session_start();
-if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-    http_response_code(403);
-    exit('Invalid CSRF token.');
-}
+// --- CONFIG AND HEADERS ---
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(0);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/error.log');
 
-// Security headers
 header('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.google.com https://www.gstatic.com; style-src \'self\' https://fonts.googleapis.com https://www.gstatic.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data:;');
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
@@ -20,100 +14,149 @@ header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     header('Strict-Transport-Security: max-age=63072000; includeSubDomains; preload');
 }
+// --- END OF CONFIG AND HEADERS ---
 
-$receiving_email_address = 'manavarya0178@gmail.com';
+require_once __DIR__ . '/config.php';
+session_start();
 
-if (file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php')) {
-    include($php_email_form);
-} else {
-    die('Unable to load the "PHP Email Form" Library!');
+if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    http_response_code(403);
+    exit('Invalid CSRF token.');
 }
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once __DIR__ . '/../assets/vendor/phpmailer/src/PHPMailer.php';
+require_once __DIR__ . '/../assets/vendor/phpmailer/src/SMTP.php';
+require_once __DIR__ . '/../assets/vendor/phpmailer/src/Exception.php';
 
 // Sanitize and validate inputs
 function clean_input($data) {
     return htmlspecialchars(strip_tags(trim($data)), ENT_QUOTES, 'UTF-8');
 }
 
-$name = isset($_POST['name']) ? clean_input($_POST['name']) : (isset($_POST['customerName']) ? clean_input($_POST['customerName']) : '');
-$email = isset($_POST['email']) ? clean_input($_POST['email']) : (isset($_POST['contactDetails']) ? clean_input($_POST['contactDetails']) : '');
-$subject = isset($_POST['subject']) ? clean_input($_POST['subject']) : 'Demo Form Submission';
-$message = isset($_POST['message']) ? clean_input($_POST['message']) : '';
+$name = clean_input($_POST['name'] ?? '');
+$email = clean_input($_POST['email'] ?? '');
+$subject = clean_input($_POST['subject'] ?? 'Contact Form Submission');
+$message = clean_input($_POST['message'] ?? '');
+
+// Validation logic here...
+if (empty($name) || !preg_match('/^[\p{L} .\'-]{2,100}$/u', $name)) { exit('Invalid name.'); }
+if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) { exit('Invalid email address.'); }
+if (empty($subject) || strlen($subject) > 150) { exit('Invalid subject.'); }
+if (empty($message) || strlen($message) > 2000) { exit('Invalid message.'); }
 
 // Honeypot check
 if (!empty($_POST['website_hp'])) {
-    http_response_code(400);
     exit('Spam detected.');
 }
 
-// Validate name (letters, spaces, dashes, max 100 chars)
-if (empty($name) || !preg_match('/^[\p{L} .\'-]{2,100}$/u', $name)) {
-    http_response_code(400);
-    exit('Invalid name.');
-}
-// Validate email
-if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    exit('Invalid email address.');
-}
-// Validate subject (max 150 chars)
-if (empty($subject) || strlen($subject) > 150) {
-    http_response_code(400);
-    exit('Invalid subject.');
-}
-// Validate message (if present, max 2000 chars)
-if (isset($_POST['message']) && (empty($message) || strlen($message) > 2000)) {
-    http_response_code(400);
-    exit('Invalid message.');
+$receiving_email_address = getenv('RECEIVING_EMAIL_ADDRESS');
+if (empty($receiving_email_address)) {
+    error_log("Receiving email address is not set in environment variables.");
+    exit("Server configuration error.");
 }
 
-// Rate limiting: max 5 submissions per IP per hour
-$rate_limit_file = __DIR__ . '/rate_limit_contact.log';
-$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-$now = time();
-$window = 3600; // 1 hour
-$max_requests = 5;
-$entries = [];
-if (file_exists($rate_limit_file)) {
-    $lines = file($rate_limit_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        list($entry_ip, $entry_time) = explode('|', $line);
-        if ($now - (int)$entry_time < $window) {
-            $entries[] = [$entry_ip, (int)$entry_time];
-        }
+$mail = new PHPMailer(true);
+$mail->Timeout = 10;
+// $mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+// $mail->Debugoutput = function($str, $level) {
+//     file_put_contents(__DIR__ . '/smtp_debug.log', date('Y-m-d H:i:s') . " - " . $str, FILE_APPEND);
+// };
+
+try {
+    // Server settings from .env
+    $mail->isSMTP();
+    $mail->Host = getenv('SMTP_HOST') ?: 'smtp.office365.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = getenv('SMTP_USER');
+    $mail->Password = getenv('SMTP_PASS');
+    $mail->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: 'tls';
+    $mail->Port = getenv('SMTP_PORT') ?: 587;
+
+    // Recipients
+    $mail->setFrom(getenv('SMTP_USER'), $name);
+    $mail->addAddress($receiving_email_address);
+    $mail->addReplyTo($email, $name);
+
+    // Build the HTML email body
+    $fields = [
+        'Name'    => $name,
+        'Email'   => $email,
+        'Subject' => $subject,
+        'Message' => $message
+    ];
+
+    $htmlBody = '<body style="font-family: Arial, sans-serif; background: #f8fafc; padding: 24px;">';
+    $htmlBody .= '<h2 style="color: #ff6600;">New Contact Form Submission</h2>';
+    $htmlBody .= '<table cellpadding="10" cellspacing="0" style="background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(255,102,0,0.08); border: 1.5px solid #ffb347; width: 100%; max-width: 600px; margin: 0 auto;">';
+
+    foreach ($fields as $label => $value) {
+        $htmlBody .= '<tr>';
+        $htmlBody .= '<td style="background: #ffb347; color: #fff; font-weight: bold; border-radius: 8px 0 0 8px; width: 150px;">' . htmlspecialchars($label) . '</td>';
+        $htmlBody .= '<td style="background: #fff6f0; color: #333; border-radius: 0 8px 8px 0;">' . nl2br(htmlspecialchars($value)) . '</td>';
+        $htmlBody .= '</tr>';
     }
-}
-$recent_requests = array_filter($entries, function($e) use ($ip, $window, $now) {
-    return $e[0] === $ip && ($now - $e[1]) < $window;
-});
-if (count($recent_requests) >= $max_requests) {
-    http_response_code(429);
-    exit('Too many submissions from your IP. Please try again later.');
-}
-$entries[] = [$ip, $now];
-file_put_contents($rate_limit_file, implode("\n", array_map(function($e) { return $e[0] . '|' . $e[1]; }, $entries)) . "\n");
 
-$contact = new PHP_Email_Form;
-$contact->ajax = true;
-$contact->to = $receiving_email_address;
-$contact->from_name = $name;
-$contact->from_email = $email;
-$contact->subject = $subject;
+    $htmlBody .= '</table>';
+    $htmlBody .= '<p style="color: #888; font-size: 0.95em; margin-top: 18px; text-align:center;">This message was sent from the Contact Us form on your website.</p>';
+    $htmlBody .= '</body>';
 
-// Add all POST fields to the email in a consistent format
-foreach ($_POST as $key => $value) {
-    if (is_array($value)) {
-        $value = implode(', ', $value);
+    // Content
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body    = $htmlBody;
+    $mail->AltBody = "You have a new message from your website contact form.\n\n"."Here are the details:\n\nName: {$name}\n\nEmail: {$email}\n\nMessage:\n{$message}";
+
+    $mail->send();
+
+    // --- Send Confirmation Email to User ---
+    try {
+        $mailUser = new PHPMailer(true);
+        $mailUser->Timeout = 10;
+        // $mailUser->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+        // $mailUser->Debugoutput = function($str, $level) {
+        //     file_put_contents(__DIR__ . '/smtp_debug.log', date('Y-m-d H:i:s') . " - " . $str, FILE_APPEND);
+        // };
+
+        // Server settings from .env
+        $mailUser->isSMTP();
+        $mailUser->Host = getenv('SMTP_HOST');
+        $mailUser->SMTPAuth = true;
+        $mailUser->Username = getenv('SMTP_USER');
+        $mailUser->Password = getenv('SMTP_PASS');
+        $mailUser->SMTPSecure = getenv('SMTP_ENCRYPTION');
+        $mailUser->Port = getenv('SMTP_PORT');
+
+        // Recipient
+        $mailUser->setFrom(getenv('SMTP_USER'), 'Tendercare');
+        $mailUser->addAddress($email, $name); // Send to the user
+        $mailUser->addReplyTo(getenv('SMTP_USER'), 'Tendercare');
+
+        // Build user confirmation email body
+        $userHtmlBody = '<body style="font-family: Arial, sans-serif; background: #f8fafc; padding: 24px;">';
+        $userHtmlBody .= '<h2 style="color: #ff6600;">Thank You For Your Inquiry!</h2>';
+        $userHtmlBody .= '<p>Dear ' . htmlspecialchars($name) . ',</p>';
+        $userHtmlBody .= '<p>We have received your message and will get back to you as soon as possible. Here is a copy of your submission for your records:</p>';
+        $userHtmlBody .= $htmlBody; // Re-use the table from the admin email
+        $userHtmlBody .= '<p style="color: #888; font-size: 0.95em; margin-top: 18px; text-align:center;">Thank you for choosing Tendercare.</p>';
+        $userHtmlBody .= '</body>';
+        
+        // Content
+        $mailUser->isHTML(true);
+        $mailUser->Subject = 'Confirmation: We\'ve Received Your Message';
+        $mailUser->Body    = $userHtmlBody;
+
+        $mailUser->send();
+    } catch (Exception $e) {
+        // Log error but don't fail the request, as the admin email was sent.
+        error_log("Could not send confirmation email to {$email}: " . $mailUser->ErrorInfo);
     }
-    $contact->add_message(clean_input($value), ucfirst(str_replace(['_', '-'], ' ', $key)));
+    // --- End Confirmation Email ---
+
+    echo 'OK';
+} catch (Exception $e) {
+    error_log("Mailer Error: " . $mail->ErrorInfo);
+    exit("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
 }
-
-$contact->smtp = array(
-    'host' => getenv('SMTP_HOST') ?: 'smtp.gmail.com',
-    'username' => getenv('SMTP_USER'),
-    'password' => getenv('SMTP_PASS'),
-    'port' => getenv('SMTP_PORT') ?: '587',
-    'encryption' => getenv('SMTP_ENCRYPTION') ?: 'tls'
-);
-
-echo $contact->send();
-?>

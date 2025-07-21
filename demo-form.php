@@ -413,7 +413,11 @@
     </style>
   </footer>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script>
   // Progress bar functionality
   function updateProgress() {
@@ -545,9 +549,17 @@
 document.addEventListener('DOMContentLoaded', function() {
   var demoForm = document.querySelector('form[action="book-demo.php"]');
   var thankYouMsg = document.getElementById('demoFormThankYou');
+  
   if (demoForm && thankYouMsg) {
     demoForm.addEventListener('submit', function(e) {
       e.preventDefault();
+      
+      const submitButton = demoForm.querySelector('button[type="submit"]');
+      const loadingIndicator = demoForm.querySelector('.loading');
+
+      if (submitButton) submitButton.style.display = 'none';
+      if (loadingIndicator) loadingIndicator.style.display = 'block';
+
       var formData = new FormData(demoForm);
       fetch('book-demo.php', {
         method: 'POST',
@@ -555,37 +567,33 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(response => response.text())
       .then(data => {
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+
         if (data.trim() === 'OK') {
-          demoForm.style.display = 'none';
+          // Hide the button and show the thank you message inside the form
           thankYouMsg.style.display = 'block';
         } else {
+          // Show the error and bring back the submit button
           var err = demoForm.querySelector('.error-message');
-          if (err) err.textContent = data;
+          if (err) {
+            err.textContent = data;
+            err.style.display = 'block';
+          }
+          if (submitButton) submitButton.style.display = 'block';
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
         var err = demoForm.querySelector('.error-message');
-        if (err) err.textContent = 'There was an error submitting the form.';
+        if (err) {
+            err.textContent = 'A network error occurred. Please try again.';
+            err.style.display = 'block';
+        }
+        if (submitButton) submitButton.style.display = 'block';
       });
     });
   }
 });
-</script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script>
-  // Math CAPTCHA setup
-  document.addEventListener('DOMContentLoaded', function() {
-    var num1 = Math.floor(Math.random() * 10) + 1;
-    var num2 = Math.floor(Math.random() * 10) + 1;
-    var q = document.getElementById('captcha_question');
-    var n1 = document.getElementById('captcha_num1');
-    var n2 = document.getElementById('captcha_num2');
-    if (q && n1 && n2) {
-      q.textContent = num1 + ' + ' + num2;
-      n1.value = num1;
-      n2.value = num2;
-    }
-  });
 </script>
 </body>
 </html> 

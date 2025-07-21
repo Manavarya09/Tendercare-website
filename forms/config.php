@@ -8,6 +8,12 @@ function load_env(
     foreach ($lines as $line) {
         if (strpos(trim($line), '#') === 0) continue;
         list($name, $value) = array_map('trim', explode('=', $line, 2));
+        
+        // Trim quotes from the value
+        if (substr($value, 0, 1) == '"' && substr($value, -1) == '"') {
+            $value = substr($value, 1, -1);
+        }
+
         if (!getenv($name)) {
             putenv("$name=$value");
             $_ENV[$name] = $value;

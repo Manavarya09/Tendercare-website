@@ -168,24 +168,27 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
   // Smooth scroll for View More Products button
-  document.querySelector('.view-more-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    const productsSection = document.querySelector('#products');
-    const headerOffset = 80; // Adjust this value based on your header height
-    const elementPosition = productsSection.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  var viewMoreBtn = document.querySelector('.view-more-btn');
+  if (viewMoreBtn) {
+    viewMoreBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const productsSection = document.querySelector('#products');
+      const headerOffset = 80; // Adjust this value based on your header height
+      const elementPosition = productsSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      // Add highlight animation to products section
+      productsSection.classList.add('highlight-section');
+      setTimeout(() => {
+        productsSection.classList.remove('highlight-section');
+      }, 1500);
     });
-
-    // Add highlight animation to products section
-    productsSection.classList.add('highlight-section');
-    setTimeout(() => {
-      productsSection.classList.remove('highlight-section');
-    }, 1500);
-  });
+  }
 
   /**
    * Top Scroll Progress Bar

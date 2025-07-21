@@ -1,6 +1,24 @@
 <?php
+// --- CONFIG AND HEADERS ---
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/forms/error.log');
+
+header('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.google.com https://www.gstatic.com; style-src \'self\' https://fonts.googleapis.com https://www.gstatic.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data:;');
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer-when-downgrade');
+header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+    header('Strict-Transport-Security: max-age=63072000; includeSubDomains; preload');
+}
+// --- END OF CONFIG AND HEADERS ---
+
 require_once __DIR__ . '/forms/config.php';
 session_start();
+
 if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
     http_response_code(403);
     exit('Invalid CSRF token.');
@@ -117,32 +135,6 @@ if (!empty($fields['Budget']) && strlen($fields['Budget']) > 50) {
     exit('Invalid budget.');
 }
 
-// Rate limiting: max 5 submissions per IP per hour
-$rate_limit_file = __DIR__ . '/forms/rate_limit_demo.log';
-$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-$now = time();
-$window = 3600; // 1 hour
-$max_requests = 5;
-$entries = [];
-if (file_exists($rate_limit_file)) {
-    $lines = file($rate_limit_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        list($entry_ip, $entry_time) = explode('|', $line);
-        if ($now - (int)$entry_time < $window) {
-            $entries[] = [$entry_ip, (int)$entry_time];
-        }
-    }
-}
-$recent_requests = array_filter($entries, function($e) use ($ip, $window, $now) {
-    return $e[0] === $ip && ($now - $e[1]) < $window;
-});
-if (count($recent_requests) >= $max_requests) {
-    http_response_code(429);
-    exit('Too many submissions from your IP. Please try again later.');
-}
-$entries[] = [$ip, $now];
-file_put_contents($rate_limit_file, implode("\n", array_map(function($e) { return $e[0] . '|' . $e[1]; }, $entries)) . "\n");
-
 $html = '<html><body style="font-family: Arial, sans-serif; background: #f8fafc; padding: 24px;">';
 $html .= '<h2 style="color: #ff6600;">New Book a Demo Submission</h2>';
 $html .= '<table cellpadding="10" cellspacing="0" style="background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(255,102,0,0.08); border: 1.5px solid #ffb347;">';
@@ -156,7 +148,14 @@ $html .= '</table>';
 $html .= '<p style="color: #888; font-size: 0.95em; margin-top: 18px;">This message was sent from the Book a Demo form on your website.</p>';
 $html .= '</body></html>';
 
+
 $mail = new PHPMailer(true);
+$mail->Timeout = 10;
+// $mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+// $mail->Debugoutput = function($str, $level) {
+//     file_put_contents(__DIR__ . '/forms/smtp_debug.log', date('Y-m-d H:i:s') . " - " . $str, FILE_APPEND);
+// };
+
 try {
     // Server settings
     $mail->isSMTP();
@@ -174,96 +173,58 @@ try {
     if (filter_var($fields['Email'], FILTER_VALIDATE_EMAIL)) {
       $mail->addReplyTo($fields['Email']);
     }
-    // Embed the logo
-    $logoPath = __DIR__ . '/assets/img/tendercare-logo.png';
-    $logoCid = 'tendercare-logo';
-    $logoHtml = '';
-    if (file_exists($logoPath)) {
-      $logoHtml = '<img src="cid:' . $logoCid . '" alt="Tendercare Logo" width="160" style="display: block; margin: 0 auto 18px auto;">';
-    }
-    // Content
+    
+    // Content for Admin Email
     $mail->isHTML(true);
-    $mail->Subject = 'Thank You for Your Response';
-    // Build HTML body (same as contact form)
-    $body = $logoHtml;
-    $body .= '<table cellpadding="10" cellspacing="0" style="background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(255,102,0,0.08); border: 1.5px solid #ffb347; width: 100%; max-width: 600px; margin: 0 auto;">';
-    foreach ($fields as $label => $value) {
-      $body .= '<tr>';
-      $body .= '<td style="background: #ffb347; color: #fff; font-weight: bold; border-radius: 8px 0 0 8px;">' . htmlspecialchars($label) . '</td>';
-      $body .= '<td style="background: #fff6f0; color: #333; border-radius: 0 8px 8px 0;">' . nl2br(htmlspecialchars($value)) . '</td>';
-      $body .= '</tr>';
-    }
-    $body .= '</table>';
-    $body .= '<p style="color: #888; font-size: 0.95em; margin-top: 18px; text-align:center;">This message was sent from the Book a Demo form on your website.</p>';
-    $mail->Body = $body;
+    $mail->Subject = 'New Book a Demo Submission from ' . $fields['Customer Name'];
+    $mail->Body = $html;
     $mail->send();
 
-    // Send to sales@tendercare.ae
-    $mailSales = new PHPMailer(true);
+    // --- Send Confirmation Email to User ---
     try {
-      $mailSales->isSMTP();
-      $mailSales->Host = getenv('SMTP_HOST') ?: 'mail.tendercare.ae';
-      $mailSales->SMTPAuth = true;
-      $mailSales->Username = getenv('SMTP_USER');
-      $mailSales->Password = getenv('SMTP_PASS');
-      $mailSales->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: PHPMailer::ENCRYPTION_SMTPS;
-      $mailSales->Port = getenv('SMTP_PORT') ?: 465;
-      $mailSales->setFrom('sales@tendercare.ae', 'Tendercare Website');
-      $mailSales->addAddress('sales@tendercare.ae');
-      if (filter_var($fields['Email'], FILTER_VALIDATE_EMAIL)) {
-        $mailSales->addReplyTo($fields['Email']);
-      }
-      if (file_exists($logoPath)) {
-        $mailSales->addEmbeddedImage($logoPath, $logoCid);
-      }
-      $mailSales->isHTML(true);
-      $mailSales->Subject = 'Thank You for Your Response';
-      $mailSales->Body = $body;
-      $mailSales->send();
-    } catch (Exception $e) {
-      // Optionally log error
-    }
+        $mailUser = new PHPMailer(true);
+        $mailUser->Timeout = 10;
+        // $mailUser->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+        // $mailUser->Debugoutput = function($str, $level) {
+        //     file_put_contents(__DIR__ . '/forms/smtp_debug.log', date('Y-m-d H:i:s') . " - " . $str, FILE_APPEND);
+        // };
 
-    // Send to user
-    if (filter_var($fields['Email'], FILTER_VALIDATE_EMAIL)) {
-      $mailUser = new PHPMailer(true);
-      try {
+        // Server settings from .env
         $mailUser->isSMTP();
-        $mailUser->Host = getenv('SMTP_HOST') ?: 'mail.tendercare.ae';
+        $mailUser->Host = getenv('SMTP_HOST');
         $mailUser->SMTPAuth = true;
         $mailUser->Username = getenv('SMTP_USER');
         $mailUser->Password = getenv('SMTP_PASS');
-        $mailUser->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: PHPMailer::ENCRYPTION_SMTPS;
-        $mailUser->Port = getenv('SMTP_PORT') ?: 465;
-        $mailUser->setFrom('sales@tendercare.ae', 'Tendercare Website');
-        $mailUser->addAddress($fields['Email']);
-        $mailUser->addReplyTo('sales@tendercare.ae');
-        if (file_exists($logoPath)) {
-          $mailUser->addEmbeddedImage($logoPath, $logoCid);
-        }
+        $mailUser->SMTPSecure = getenv('SMTP_ENCRYPTION');
+        $mailUser->Port = getenv('SMTP_PORT');
+
+        // Recipient
+        $mailUser->setFrom(getenv('SMTP_USER'), 'Tendercare');
+        $mailUser->addAddress($fields['Email'], $fields['Customer Name']); // Send to the user
+        $mailUser->addReplyTo(getenv('SMTP_USER'), 'Tendercare');
+
+        // Build user confirmation email body
+        $userHtmlBody = '<body style="font-family: Arial, sans-serif; background: #f8fafc; padding: 24px;">';
+        $userHtmlBody .= '<h2 style="color: #ff6600;">Thank You For Your Demo Request!</h2>';
+        $userHtmlBody .= '<p>Dear ' . htmlspecialchars($fields['Customer Name']) . ',</p>';
+        $userHtmlBody .= '<p>We have received your request for a demo and will contact you shortly to schedule a convenient time. Here is a copy of your submission for your records:</p>';
+        $userHtmlBody .= $html; // Re-use the table from the admin email
+        $userHtmlBody .= '<p style="color: #888; font-size: 0.95em; margin-top: 18px; text-align:center;">Thank you for choosing Tendercare.</p>';
+        $userHtmlBody .= '</body>';
+        
+        // Content for User Email
         $mailUser->isHTML(true);
-        $mailUser->Subject = 'Thank You for Your Response';
-        $mailUser->Body = $body;
+        $mailUser->Subject = 'Confirmation: We\'ve Received Your Demo Request';
+        $mailUser->Body    = $userHtmlBody;
         $mailUser->send();
-      } catch (Exception $e) {
-        // Optionally log error
-      }
+    } catch (Exception $e) {
+        // Log error but don't fail the request
+        error_log("Could not send confirmation email to " . $fields['Email'] . ": " . $mailUser->ErrorInfo);
     }
+    // --- End Confirmation Email ---
+
     echo 'OK';
 } catch (Exception $e) {
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-}
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(0);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/error.log');
-// Security headers
-header('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.google.com https://www.gstatic.com; style-src \'self\' https://fonts.googleapis.com https://www.gstatic.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data:;');
-header('X-Frame-Options: DENY');
-header('X-Content-Type-Options: nosniff');
-header('Referrer-Policy: no-referrer-when-downgrade');
-header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-    header('Strict-Transport-Security: max-age=63072000; includeSubDomains; preload');
+    error_log("Mailer Error: " . $mail->ErrorInfo);
+    exit('Mailer Error: ' . $mail->ErrorInfo);
 } 

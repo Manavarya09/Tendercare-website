@@ -176,7 +176,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="demo-form.html" target="_blank" rel="noopener" data-aos="zoom-in" data-aos-delay="400">Book a Demo</a>
+      <a class="btn-getstarted" href="demo-form.php" target="_blank" rel="noopener" data-aos="zoom-in" data-aos-delay="400">Book a Demo</a>
       <!-- committed by Manav Arya Singh -->
 
     </div>
@@ -914,16 +914,20 @@
                 <p>Request a personalized demo or consultation to see how our intelligent healthcare ecosystem can enhance your practice's efficiency and patient care.</p>
                 <div class="row gy-4">
                   <div class="col-md-6">
-                    <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                    <label for="contact_name" class="form-label">Your Name</label>
+                    <input type="text" id="contact_name" name="name" class="form-control" placeholder="Your Name" required>
                   </div>
                   <div class="col-md-6 ">
-                    <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                    <label for="contact_email" class="form-label">Your Email</label>
+                    <input type="email" id="contact_email" class="form-control" name="email" placeholder="Your Email" required>
                   </div>
                   <div class="col-12">
-                    <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                    <label for="contact_subject" class="form-label">Subject</label>
+                    <input type="text" id="contact_subject" class="form-control" name="subject" placeholder="Subject" required>
                   </div>
                   <div class="col-12">
-                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                    <label for="contact_message" class="form-label">Message</label>
+                    <textarea id="contact_message" class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
                   </div>
                   <div class="col-12 text-center">
                     <div class="loading">Loading</div>
