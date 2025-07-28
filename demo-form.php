@@ -101,16 +101,24 @@
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
+          <div class="mobile-nav-close d-xl-none">
+            <i class="bi bi-x"></i>
+          </div>
           <li><a href="index.html#hero">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
           <li><a href="index.html#products">Products</a></li>
           <li><a href="index.html#features">Features</a></li>
           <li><a href="index.html#testimonials">Testimonials</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="index.html#contact">Contact</a></li>
+          <li class="d-xl-none mobile-demo-btn">
+            <a href="demo-form.php" class="btn-getstarted-mobile active">
+              <span>Book a Demo</span>
+            </a>
+          </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="demo-form.html">Book a Demo</a>
+      <a class="btn-getstarted" href="demo-form.html"><span>Book a Demo</span></a>
       <!-- committed by Manav Arya Singh -->
     </div>
   </header>
@@ -166,7 +174,7 @@
                   <div class="col-12">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-person"></i></span>
-                      <input type="text" class="form-control demo-form-input" id="customerName" name="customerName" placeholder=" " required>
+                      <input type="text" class="form-control demo-form-input" id="customerName" name="customerName" placeholder=" " autocomplete="name" required>
                       <label for="customerName">Customer Name / Contact Person <span class="text-danger">*</span></label>
                       <div class="valid-feedback">Beautiful Name:)</div>
                       <div class="invalid-feedback">Please enter a name.</div>
@@ -175,7 +183,7 @@
                   <div class="col-12">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-building"></i></span>
-                      <input type="text" class="form-control demo-form-input" id="orgName" name="orgName" placeholder=" " required>
+                      <input type="text" class="form-control demo-form-input" id="orgName" name="orgName" placeholder=" " autocomplete="organization" required>
                       <label for="orgName">Organization / Clinic Name <span class="text-danger">*</span></label>
                       <div class="valid-feedback">Looks good!</div>
                       <div class="invalid-feedback">Please enter an organization name.</div>
@@ -184,7 +192,7 @@
                   <div class="col-md-6">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-envelope"></i></span>
-                      <input type="email" class="form-control demo-form-input" id="contactDetails" name="contactDetails" placeholder=" " required>
+                      <input type="email" class="form-control demo-form-input" id="contactDetails" name="contactDetails" placeholder=" " autocomplete="email" required>
                       <label for="contactDetails">Email <span class="text-danger">*</span></label>
                       <div class="valid-feedback">Valid email!</div>
                       <div class="invalid-feedback">Please enter a valid email.</div>
@@ -250,35 +258,35 @@
                           </div>
                         </div>
                       </div>
-                      <input type="number" class="form-control demo-form-input no-spinner country-phone-input" id="preferredContact" name="preferredContact" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                      <input type="number" class="form-control demo-form-input no-spinner country-phone-input" id="preferredContact" name="preferredContact" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="tel" autocomplete="tel" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                       <label for="preferredContact">Contact Number <span class="text-danger">*</span></label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-person-lines-fill"></i></span>
-                      <input type="number" class="form-control demo-form-input" id="numUsers" name="numUsers" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                      <input type="number" class="form-control demo-form-input" id="numUsers" name="numUsers" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                       <label for="numUsers">Number of Users <span class="text-danger">*</span></label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-people"></i></span>
-                      <input type="number" class="form-control demo-form-input" id="numDoctors" name="numDoctors" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                      <input type="number" class="form-control demo-form-input" id="numDoctors" name="numDoctors" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                       <label for="numDoctors">Number of Doctors <span class="text-danger">*</span></label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-heart-pulse"></i></span>
-                      <input type="text" class="form-control demo-form-input" id="specialties" name="specialties" placeholder=" ">
+                      <input type="text" class="form-control demo-form-input" id="specialties" name="specialties" placeholder=" " autocomplete="off">
                       <label for="specialties">Medical Specialties <span class="text-secondary"></span></label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-geo-alt"></i></span>
-                      <input type="number" class="form-control demo-form-input" id="numBranches" name="numBranches" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                      <input type="number" class="form-control demo-form-input" id="numBranches" name="numBranches" placeholder=" " min="0" step="1" pattern="[0-9]*" inputmode="numeric" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                       <label for="numBranches">Number of Branches / Locations <span class="text-secondary"></span></label>
                     </div>
                   </div>
@@ -352,7 +360,7 @@
                   <div class="col-md-6">
                     <div class="demo-form-floating">
                       <span class="demo-form-icon"><i class="bi bi-calendar-event"></i></span>
-                      <input type="text" class="form-control demo-form-input" id="demoDate" name="demoDate" placeholder=" ">
+                      <input type="text" class="form-control demo-form-input" id="demoDate" name="demoDate" placeholder=" " autocomplete="off">
                       <label for="demoDate">Preferred Demo Day/Date</label>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-// Move all @import rules to the top of the file
+/* Move all @import rules to the top of the file
 
 :root {
   --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -316,6 +316,19 @@ h6 {
     order: 2;
     margin: 0 10px 0 0;
     padding: 6px 15px;
+    position: relative;
+  }
+
+  /* Show 'Book Demo' on small screens */
+  @media (max-width: 991px) {
+    .header .btn-getstarted::after {
+      content: 'Book Demo';
+      display: inline-block;
+    }
+    
+    .header .btn-getstarted span {
+      display: none;
+    }
   }
 
   .header .navmenu {
@@ -452,56 +465,84 @@ h6 {
 /* Navmenu - Mobile */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 28px;
-    line-height: 0;
-    margin-right: 10px;
+    color: var(--default-color);
+    font-size: 26px;
+    line-height: 1;
+    margin-right: 8px;
     cursor: pointer;
-    transition: 0.5s;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     padding: 10px;
-    border-radius: 50%;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 146, 72, 0.2);
+    z-index: 10001;
+    position: relative;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .mobile-nav-toggle:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ff9248;
+    background: rgba(255, 146, 72, 0.15);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 4px 12px rgba(255, 146, 72, 0.3);
   }
 
   .navmenu {
     padding: 0;
-    z-index: 9997;
   }
 
   .navmenu ul {
     display: none;
     list-style: none;
-    position: absolute;
-    inset: 60px 20px 20px 20px;
-    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(85vw, 380px);
+    max-width: 380px;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12), -2px 0 8px rgba(0, 0, 0, 0.08);
+    padding: 90px 0 30px 0;
     margin: 0;
-    border-radius: 6px;
-    background-color: var(--nav-mobile-background-color);
     overflow-y: auto;
-    transition: 0.3s;
-    z-index: 9998;
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    z-index: 10000;
+    border-left: 4px solid transparent;
+    border-image: linear-gradient(135deg, var(--accent-color), #ffb347) 1;
   }
 
   .navmenu a,
   .navmenu a:focus {
-    color: var(--nav-dropdown-color);
-    padding: 10px 20px;
+    color: var(--default-color);
+    padding: 18px 30px;
     font-family: var(--nav-font);
     font-size: 17px;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-    transition: 0.3s;
+    display: block;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+  }
+
+  .navmenu a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(135deg, rgba(255, 146, 72, 0.1) 0%, rgba(255, 179, 71, 0.05) 100%);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
   }
 
   .navmenu a i,
@@ -528,7 +569,27 @@ h6 {
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--nav-dropdown-hover-color);
+    color: var(--accent-color);
+    padding-left: 34px;
+    transform: translateX(4px);
+    font-weight: 600;
+  }
+
+  .navmenu a:hover::before,
+  .navmenu .active::before {
+    width: 100%;
+  }
+
+  .navmenu a:hover::after,
+  .navmenu .active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: linear-gradient(135deg, var(--accent-color), #ffb347);
+    border-radius: 0 3px 3px 0;
   }
 
   .navmenu .active i,
@@ -564,25 +625,150 @@ h6 {
   }
 
   .mobile-nav-active .mobile-nav-toggle {
-    color: #fff;
-    position: absolute;
-    font-size: 32px;
-    top: 15px;
-    right: 15px;
-    margin-right: 0;
-    z-index: 9999;
+    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--accent-color);
+    transform: scale(1.1);
   }
 
   .mobile-nav-active .navmenu {
     position: fixed;
     overflow: hidden;
     inset: 0;
-    background: rgba(33, 37, 41, 0.8);
-    transition: 0.3s;
+    background: rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+    z-index: 9999;
   }
 
   .mobile-nav-active .navmenu>ul {
     display: block;
+    right: 0;
+  }
+
+  /* Mobile menu close button */
+  .mobile-nav-close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 146, 72, 0.1);
+    border: 2px solid rgba(255, 146, 72, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 10001;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(255, 146, 72, 0.2);
+  }
+
+  .mobile-nav-close:hover {
+    background: linear-gradient(135deg, var(--accent-color), #ffb347);
+    color: white;
+    transform: rotate(90deg) scale(1.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 20px rgba(255, 146, 72, 0.4);
+  }
+
+  /* Mobile demo button inside menu */
+  .mobile-demo-btn {
+    margin: 30px 0 20px 0;
+    padding: 0 25px;
+  }
+
+  .btn-getstarted-mobile {
+    display: block;
+    background: linear-gradient(135deg, var(--accent-color) 0%, #ffb347 100%);
+    color: white;
+    padding: 16px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 6px 20px rgba(255, 146, 72, 0.25);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-getstarted-mobile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .btn-getstarted-mobile:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(255, 146, 72, 0.4);
+    color: white;
+  }
+
+  .btn-getstarted-mobile:hover::before {
+    left: 100%;
+  }
+
+  .btn-getstarted-mobile:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  /* Additional responsive breakpoints */
+  @media (max-width: 480px) {
+    .navmenu ul {
+      width: 90vw;
+      padding: 80px 0 30px 0;
+    }
+
+    .navmenu a,
+    .navmenu a:focus {
+      padding: 16px 25px;
+      font-size: 16px;
+    }
+
+    .mobile-nav-close {
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    .mobile-demo-btn {
+      padding: 0 20px;
+    }
+
+    .btn-getstarted-mobile {
+      padding: 14px 24px;
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .navmenu ul {
+      width: 95vw;
+    }
+
+    .navmenu a,
+    .navmenu a:focus {
+      padding: 14px 20px;
+      font-size: 15px;
+    }
+
+    .mobile-demo-btn {
+      padding: 0 15px;
+    }
   }
 }
 

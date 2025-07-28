@@ -3,7 +3,7 @@
   =============================================
   🌟🌟 DESIGNED & DEVELOPED BY MANAV ARYA SINGH 🌟🌟
   =============================================
-  This website template was designed & developed
+  This website was designed & developed
   entirely by Manav Arya Singh.
   =============================================
 -->
@@ -166,17 +166,25 @@
 
       <nav id="navmenu" class="navmenu" data-aos="fade-left" data-aos-delay="300">
         <ul>
+          <div class="mobile-nav-close d-xl-none">
+            <i class="bi bi-x"></i>
+          </div>
           <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
           <li><a href="#products">Products</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li class="d-xl-none mobile-demo-btn">
+            <a href="demo-form.php" class="btn-getstarted-mobile" target="_blank" rel="noopener">
+              <span>Book a Demo</span>
+            </a>
+          </li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="demo-form.php" target="_blank" rel="noopener" data-aos="zoom-in" data-aos-delay="400">Book a Demo</a>
+      <a class="btn-getstarted" href="demo-form.php" target="_blank" rel="noopener" data-aos="zoom-in" data-aos-delay="400"><span>Book a Demo</span></a>
       <!-- committed by Manav Arya Singh -->
 
     </div>
@@ -911,7 +919,6 @@
                 </div>
                 <div class="form-progress-bar"><div class="form-progress-bar-inner" id="contactFormProgress"></div></div>
                 <h3>Get In Touch</h3>
-                <p>Request a personalized demo or consultation to see how our intelligent healthcare ecosystem can enhance your practice's efficiency and patient care.</p>
                 <div class="row gy-4">
                   <div class="col-md-6">
                     <label for="contact_name" class="form-label">Your Name</label>
@@ -969,7 +976,7 @@
   
 <footer id="footer" class="footer">
   <div class="container copyright text-center mt-4 position-relative">
-    <p class="mb-0">© Copyright <span>Tendercare</span> All Rights Reserved</p>
+    <p class="mb-0">© Copyright <span>Tendercare FZE 2025</span> All Rights Reserved</p>
     <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
     <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
   </div>
@@ -1067,17 +1074,17 @@
   </script>
   <script>
     // Fetch CSRF token and set it in the contact form
-    document.addEventListener('DOMContentLoaded', function() {
-      fetch('forms/get-csrf-token.php')
-        .then(response => response.text())
-        .then(token => {
-          var csrfInput = document.getElementById('csrf_token');
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('forms/get-csrf-token.php')
+    .then(response => response.text())
+    .then(token => {
+      var csrfInput = document.getElementById('csrf_token');
           if (csrfInput) {
             csrfInput.value = token;
           }
-        });
     });
-  </script>
+});
+</script>
 </body>
 
 </html>
