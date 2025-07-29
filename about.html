@@ -7,7 +7,7 @@
   <title>About Us | Tendercare</title>
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/main.min.css" rel="stylesheet">
   <style>
     html, body {
       height: 100%;
@@ -121,93 +121,147 @@
     }
   </style>
   <style>
-    /* Modal styles */
+    /* Enhanced Modal styles */
     .bio-modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       width: 100vw; height: 100vh;
-      background: rgba(20,33,61,0.45);
+      background: rgba(20,33,61,0.75);
+      backdrop-filter: blur(4px);
       z-index: 2000;
       display: none;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s;
+      transition: all 0.3s ease-in-out;
+      opacity: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .bio-modal-backdrop.active {
       display: flex;
+      opacity: 1;
     }
     .bio-modal {
       background: #fff;
-      border-radius: 24px;
-      box-shadow: 0 8px 48px rgba(20,33,61,0.18);
-      max-width: 720px;
-      width: 95vw;
-      min-height: 340px;
+      border-radius: 20px;
+      box-shadow: 0 15px 60px rgba(0,0,0,0.2);
+      max-width: 900px;
+      width: 100%;
+      min-height: 500px;
+      max-height: 90vh;
       display: flex;
       flex-direction: row;
-      align-items: stretch;
       overflow: hidden;
       position: relative;
-      animation: modalPopIn 0.25s cubic-bezier(.39,.575,.565,1);
+      animation: modalPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
+      transform: translateY(30px);
+      opacity: 0;
     }
     @keyframes modalPopIn {
-      0% { transform: scale(0.92) translateY(40px); opacity: 0; }
-      100% { transform: scale(1) translateY(0); opacity: 1; }
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
     .bio-modal-photo {
-      background: #fff6f0;
+      flex: 0 0 40%;
+      background: #f8fafc;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 220px;
-      max-width: 240px;
-      padding: 36px 18px;
-      border-right: 1.5px solid #ffe0c2;
+      padding: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bio-modal-photo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 102, 0, 0.05) 0%, rgba(255, 179, 71, 0.05) 100%);
+      z-index: 1;
     }
     .bio-modal-photo img {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 10px solid #ff6600;
-      box-shadow: 0 0 0 6px #fff6f0, 0 4px 32px 0 rgba(255,102,0,0.25);
-      background: #fff6f0;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+    .bio-modal-photo:hover img {
+      transform: scale(1.02);
     }
     .bio-modal-content {
       flex: 1;
-      padding: 36px 32px;
+      padding: 50px 40px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      overflow-y: auto;
+      max-height: 100%;
+      position: relative;
     }
     .bio-modal-content h3 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: 800;
       color: #14213d;
-      margin-bottom: 10px;
+      margin: 0 0 12px 0;
+      line-height: 1.2;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    .bio-modal-content h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6600, #ffb347);
+      border-radius: 2px;
     }
     .bio-modal-content .bio-role {
       color: #ff6600;
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin-bottom: 18px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0 0 25px 0;
+      letter-spacing: 0.5px;
     }
     .bio-modal-content p {
-      color: #444;
-      font-size: 1.13rem;
-      line-height: 1.7;
+      color: #4a5568;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin: 0 0 25px 0;
+    }
+    .bio-modal-content p:last-child {
+      margin-bottom: 0;
     }
     .bio-modal-close {
       position: absolute;
-      top: 18px;
-      right: 24px;
-      font-size: 2rem;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
       color: #ff6600;
-      background: none;
-      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 102, 0, 0.2);
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       z-index: 10;
-      transition: color 0.2s;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .bio-modal-close:hover {
+      background: #ff6600;
+      color: white;
+      transform: rotate(90deg);
+      border-color: transparent;
     }
     .bio-modal-close:hover {
       color: #14213d;
@@ -361,7 +415,7 @@
 
   <footer id="footer" class="footer">
     <div class="container copyright text-center mt-4 position-relative">
-      <p class="mb-0">© Copyright <span>Tendercare</span> All Rights Reserved</p>
+      <p class="mb-0">  Copyright <span>Tendercare</span> All Rights Reserved</p>
       <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
       <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
     </div>
@@ -391,14 +445,18 @@
   <!-- Bio Modal Popup -->
   <div class="bio-modal-backdrop" id="bioModalBackdrop">
     <div class="bio-modal" id="bioModal">
-      <button class="bio-modal-close" id="bioModalClose" aria-label="Close">&times;</button>
+      <button class="bio-modal-close" id="bioModalClose" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
       <div class="bio-modal-photo">
         <img id="bioModalPhoto" src="assets/img/blankphoto.jpg" alt="Leader Photo">
       </div>
       <div class="bio-modal-content">
         <h3 id="bioModalName">Leader Name</h3>
         <div class="bio-role" id="bioModalRole">Leader Role</div>
-        <p id="bioModalText">This is a sample bio. The real bio will appear here when you click on a leader. You can update this text for each leader as needed.</p>
+        <div id="bioModalText">
+          <p>Bio content will go here...</p>
+        </div>
       </div>
     </div>
   </div>
@@ -492,5 +550,6 @@
       }
     });
   </script>
+  <script src="assets/js/main.min.js"></script>
 </body>
 </html> 

@@ -1,2 +1,10 @@
 # Ignore environment variable files
-.env 
+.env
+*.log
+
+# Minified files
+assets/css/*.min.css
+assets/js/*.min.js
+
+# Node.js dependencies
+node_modules/

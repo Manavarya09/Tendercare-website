@@ -6,273 +6,818 @@
   <title>FAQs | Tendercare</title>
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/main.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Roboto:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <style>
-    body {
-      background: linear-gradient(135deg, #fff6f0 0%, #ffe0c2 100%);
-      min-height: 100vh;
-      font-family: var(--default-font, 'Inter', sans-serif);
-      color: #14213d;
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .faq-container {
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 102, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0); }
+    }
+    
+    :root {
+      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --heading-font: "Nunito", sans-serif;
+      --nav-font: "Inter", sans-serif;
+      --accent-color: #ff6600;
+      --accent-light: #ffb347;
+      --heading-color: #14213d;
+      --default-color: #2c3e50;
+      --surface-color: #ffffff;
+      --background-color: #f8f9fa;
+      --border-color: #e9ecef;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      background-color: var(--background-color);
+      font-family: var(--default-font);
+      color: var(--default-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .faq-page-container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 60px 16px 40px 16px;
+      padding: 60px 20px;
     }
-    .faq-title {
+
+    .faq-header {
       text-align: center;
-      font-size: 2.5rem;
+      margin-bottom: 50px;
+    }
+
+    .faq-title {
+      font-size: 3.2rem;
       font-weight: 800;
-      color: #ff6600;
-      margin-bottom: 36px;
-      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-color), #ff8a3d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: var(--accent-color);
+      position: relative;
+      display: inline-block;
+      text-shadow: 0 2px 10px rgba(255, 102, 0, 0.1);
+      letter-spacing: -0.5px;
     }
-    .faq-accordion {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 4px 32px rgba(255,102,0,0.08);
-      overflow: hidden;
+
+    .faq-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+      border-radius: 2px;
     }
-    .faq-item {
-      border-bottom: 1.5px solid #ffe0c2;
+
+    .faq-subtitle {
+      font-size: 1.25rem;
+      color: #5a6570;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+      font-weight: 400;
+      opacity: 0.9;
     }
-    .faq-item:last-child {
-      border-bottom: none;
+
+    .search-box {
+      position: relative;
+      max-width: 650px;
+      margin: 0 auto 4rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      border-radius: 50px;
+      transition: all 0.3s ease;
     }
-    .faq-question {
-      cursor: pointer;
-      padding: 26px 32px 26px 24px;
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: #ff6600;
-      background: none;
-      border: none;
+    
+    .search-box:focus-within {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(255, 102, 0, 0.15);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-color);
+      font-size: 1.3rem;
+      z-index: 2;
+      opacity: 0.8;
+    }
+
+    .search-box input {
       width: 100%;
-      text-align: left;
+      padding: 18px 25px 18px 60px;
+      border: 2px solid #f0f0f0;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: none;
+      background: white;
+      color: #333;
+      font-weight: 400;
+    }
+    
+    .search-box input::placeholder {
+      color: #a0a8b0;
+      font-weight: 400;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 20px rgba(255, 102, 0, 0.15);
+    }
+
+    .faq-accordion {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 16px;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 107, 0, 0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      position: relative;
+      will-change: transform, box-shadow, opacity;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+    
+    .faq-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 107, 0, 0.03) 0%, rgba(255, 179, 71, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
+    }
+    
+    .faq-item:hover::before {
+      opacity: 1;
+    }
+    
+    .faq-item:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .faq-item.open {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+    
+    /* Hide Book Demo button on mobile */
+    @media (max-width: 1199.98px) {
+      .btn-getstarted {
+        display: none;
+      }
+    }
+
+    .faq-toggle {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--accent-color);
+      font-size: 1.4rem;
+      min-width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      transition: background 0.2s;
-      outline: none;
-    }
-    .faq-question:hover, .faq-question:focus {
-      background: #fff6f0;
-    }
-    .faq-toggle {
-      font-size: 1.7rem;
-      color: #ff6600;
-      transition: transform 0.2s;
-      margin-left: 18px;
+      justify-content: center;
+      text-align: center;
+      margin-left: 1rem;
       flex-shrink: 0;
+      background: rgba(255, 107, 0, 0.1);
+      border-radius: 50%;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      will-change: transform, background, color, box-shadow;
+      animation: pulse 2s infinite;
     }
+    
     .faq-item.open .faq-toggle {
-      transform: rotate(45deg);
+      background: var(--accent-color);
+      color: white;
+      transform: rotate(180deg);
+      animation: none;
     }
+    
+    .faq-toggle:hover {
+      background: var(--accent-color);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    .faq-item.open .faq-toggle:hover {
+      transform: rotate(180deg) scale(1.1);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 1.75rem 2.5rem;
+      background: none;
+      border: none;
+      font-family: var(--nav-font);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #2c3e50;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 2;
+      background: white;
+      border-radius: 15px;
+      margin: 0;
+      box-shadow: none;
+      will-change: color, background;
+    }
+    
+    .faq-item.open .faq-question {
+      color: var(--accent-color);
+      background: rgba(255, 107, 0, 0.03);
+    }
+    
+    .faq-question span {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+    
+    .faq-item:hover .faq-question span {
+      transform: translateX(5px);
+    }
+
+    .faq-question:hover {
+        background-color: #fffaf5;
+    }
+
     .faq-answer {
+      padding: 0 2.5rem;
       max-height: 0;
       overflow: hidden;
-      background: #fff6f0;
-      color: #333;
-      font-size: 1.08rem;
-      padding: 0 32px 0 32px;
-      transition: max-height 0.35s cubic-bezier(.39,.575,.565,1), padding 0.2s;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 1.05rem;
+      color: #4a5568;
+      line-height: 1.8;
+      background: transparent;
+      border: none;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(-10px);
+      will-change: transform, opacity, max-height, padding;
     }
+    
     .faq-item.open .faq-answer {
-      padding: 0 32px 24px 32px;
-      max-height: 500px;
-      transition: max-height 0.5s cubic-bezier(.39,.575,.565,1), padding 0.2s;
+      padding: 0 2.5rem 2rem 2.5rem;
+      max-height: 1000px;
+      opacity: 1;
+      transform: translateY(0);
     }
+    
+    .faq-answer p {
+      margin-bottom: 0;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .faq-answer ul {
+      padding-left: 20px;
+    }
+    
+    .faq-answer li {
+      margin-bottom: 8px;
+    }
+    
     .faq-back-btn {
       position: fixed;
-      top: 28px;
-      left: 28px;
+      top: 20px;
+      left: 20px;
       z-index: 100;
-      background: linear-gradient(90deg, #ff6600 0%, #ffb347 100%);
-      color: #fff;
-      font-weight: 600;
-      padding: 10px 26px;
-      border-radius: 24px 8px 24px 8px;
-      font-size: 1.08em;
-      box-shadow: 0 4px 18px rgba(255,102,0,0.13);
+      background-color: var(--surface-color);
+      color: var(--accent-color);
+      font-family: var(--nav-font);
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 20px;
+      border-radius: 50px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 5px 15px rgba(255, 146, 72, 0.1);
+      transition: all 0.3s ease;
     }
+
     .faq-back-btn:hover {
-      background: linear-gradient(90deg, #ffb347 0%, #ff6600 100%);
-      color: #fff6f0;
-      box-shadow: 0 8px 32px rgba(255,102,0,0.22);
-      text-decoration: none;
+      background-color: var(--accent-color);
+      color: var(--surface-color);
+      box-shadow: 0 8px 20px rgba(255, 146, 72, 0.2);
+      transform: translateY(-2px);
     }
-    @media (max-width: 600px) {
-      .faq-title { font-size: 2rem; }
-      .faq-question { font-size: 1.05rem; padding: 18px 16px 18px 12px; }
-      .faq-answer { font-size: 0.98rem; padding: 0 16px 0 16px; }
-      .faq-item.open .faq-answer { padding: 0 16px 18px 16px; }
-      .faq-back-btn { top: 12px; left: 8px; padding: 8px 16px; font-size: 0.98em; }
+
+    @media (max-width: 992px) {
+      .faq-section {
+        padding: 80px 0;
+      }
+      
+      .faq-title {
+        font-size: 2.5rem;
+      }
+      
+      .faq-subtitle {
+        font-size: 1.15rem;
+        margin-bottom: 2.5rem;
+      }
+      
+      .search-box {
+        margin-bottom: 3rem;
+      }
+      
+      .search-box input {
+        padding: 16px 20px 16px 55px;
+        font-size: 1rem;
+      }
+      
+      .search-box i {
+        left: 22px;
+        font-size: 1.2rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .faq-section {
+        padding: 70px 0;
+      }
+      
+      .faq-title {
+        font-size: 2.2rem;
+        margin-bottom: 1.25rem;
+      }
+      
+      .faq-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+      
+      .faq-question {
+        padding: 1.5rem 1.75rem;
+        font-size: 1.1rem;
+      }
+      
+      .faq-answer {
+        padding: 0 1.75rem !important;
+        font-size: 1rem;
+      }
+      
+      .faq-item.open .faq-answer {
+        padding-bottom: 1.75rem !important;
+      }
+      
+      .faq-toggle {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 1.2rem;
+      }
+      
+      .search-box {
+        margin-bottom: 2.5rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .faq-section {
+        padding: 60px 0;
+      }
+      
+      .faq-title {
+        font-size: 2rem;
+      }
+      
+      .faq-subtitle {
+        font-size: 1.05rem;
+        margin-bottom: 1.75rem;
+      }
+      
+      .faq-question {
+        padding: 1.25rem 1.5rem;
+        font-size: 1.05rem;
+      }
+      
+      .faq-answer {
+        padding: 0 1.5rem !important;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+      
+      .faq-answer p {
+        padding-left: 1.25rem;
+      }
+      
+      .search-box input {
+        padding: 14px 18px 14px 50px;
+        font-size: 0.95rem;
+      }
+      
+      .search-box i {
+        left: 20px;
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <a href="#" onclick="history.back(); return false;" class="faq-back-btn" title="Go Back">
-    <i class="bi bi-arrow-left"></i> Back
-  </a>
-  <div class="faq-container">
-    <div class="faq-title">Frequently Asked Questions</div>
+  <div class="demo-form-bg-flow">
+    <svg viewBox="0 0 1440 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path class="wave1" d="M0,120 C360,180 1080,60 1440,120 L1440,180 L0,180 Z" fill="#ffb347" fill-opacity="0.18"/>
+      <path class="wave2" d="M0,160 C480,100 960,200 1440,140 L1440,180 L0,180 Z" fill="#ff6600" fill-opacity="0.12"/>
+    </svg>
+  </div>
+  
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="assets/img/tendercare-logo.png" alt="Tendercare Logo" class="logo-img">
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html#products">Products</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#testimonials">Testimonials</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="demo-form.php">Book Demo</a>
+    </div>
+  </header>
+
+  <main class="main" style="margin-top: 100px;">
+    <section class="faq-section py-5">
+      <div class="container" data-aos="fade-up">
+        <div class="text-center mb-5">
+          <h1 class="faq-title">Frequently Asked Questions</h1>
+          <p class="faq-subtitle">Find answers to common questions about Tendercare's healthcare solutions</p>
+          <div class="search-box mt-4">
+            <i class="bi bi-search"></i>
+            <input type="text" id="faqSearch" placeholder="Search questions...">
+          </div>
+        </div>
     <div class="faq-accordion" id="faqAccordion">
       <!-- FAQ items start -->
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What is medical software?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Medical software refers to digital tools—like EHR, EMR, billing, and telemedicine systems—designed to support hospital, clinic, and practice operations by managing patient data, scheduling, billing, telehealth sessions, and more.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How does electronic health records (EHR) software work?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">EHR software digitizes patient medical histories, test results, treatment plans, and more, providing secure access for healthcare providers, facilitating communication between departments, and ensuring compliance with standards like HIPAA.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What is the difference between EHR and EMR software?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">EMR (Electronic Medical Record) systems store digital versions of paper charts for a single clinic or office. EHRs provide a broader, interoperable view—sharing data across multiple facilities for coordinated care.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Why choose cloud-based healthcare software?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Cloud-based solutions enable secure, remote access to medical data, support telemedicine, reduce on-premises IT costs, and offer automatic backups and scalable performance—ideal for modern clinics and hospitals.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Can TenderCare software help with medical billing?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. TenderCare includes robust medical billing software that handles invoicing, insurance claims, and payment tracking efficiently—reducing errors and speeding up reimbursements.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Is the software HIPAA compliant?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Absolutely. TenderCare ensures full HIPAA compliance, with strong encryption, access controls, audit trails, and secure data storage to meet regulatory requirements.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Does TenderCare provide telemedicine software?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. We offer secure telemedicine software that supports video consultations, patient messaging, and virtual care workflows—integrated seamlessly with your EHR system.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How does appointment scheduling software improve efficiency?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Our appointment scheduling software automates bookings, sends reminders via SMS/email, reduces no-shows, and syncs with clinician calendars to streamline patient flow and administrative tasks.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What benefits does AI bring to your medical software?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare’s AI-enhanced software can assist with diagnosis support, predictive analytics, inventory forecasting, and treatment recommendations—boosting clinical accuracy and operational efficiency.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Can I customize the medical software for my practice?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. We offer custom medical software development, tailoring modules for EHR, lab management, telemedicine, billing, and more to meet your specific workflows and integration needs.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Is there mobile access for practitioners?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Definitely. Our mobile medical app provides doctors and nurses secure, on-the-go access to patient records, appointments, test results, and teleconsultation tools.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What lab and radiology management features are included?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare includes dedicated lab management software for test ordering, results tracking, reporting, and instrument interfacing; plus radiology software solutions for imaging workflows and PACS integration.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How secure is patient data in TenderCare?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Security is a top priority: we use enterprise-grade secure health data software measures—encryption at rest and in transit, multi-factor authentication, and regular security audits.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Do you offer software training and support?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. We provide setup assistance, user training, ongoing technical support, and EHR integration services to ensure a smooth implementation and great user experience.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How do I choose the right hospital management system?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Consider key factors like feature coverage (EHR, billing, lab, telemedicine), HIPAA compliance, ease of integration, scalability, and vendor support—TenderCare offers all of these in one platform.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What are the top features in your software for clinics?</span><span class="faq-toggle">+</span></button>
+      <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+        <button class="faq-question" aria-expanded="false">
+          <span>1. What is Capsule ?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
         <div class="faq-answer">
-          <ul style="margin:0 0 0 1.2em; padding:0;">
-            <li>Intuitive patient management system</li>
-            <li>Online appointment scheduling software</li>
-            <li>Integrated medical billing software</li>
-            <li>Secure EHR/EMR software</li>
-            <li>Cloud-based healthcare software and mobile access</li>
-            <li>Customizable workflows and reporting tools</li>
+          <p>Capsule is a healthcare management software designed to streamline clinical workflows, including patient registration, appointments, medical records, and billing.</p>
+      </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>2. How do I log in to Capsule </span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>When you open the application, the login screen will appear. Enter the username and password given by your system administrator to access the system.</p>
+      </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>3. What can I access from the Home Page?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>The Home Page serves as the central navigation hub, allowing users to access:</p>
+          <ul>
+            <li>Patient Card</li>
+            <li>Patient Registration</li>
+            <li>Patient Appointment</li>
+            <li>Electronic Medical Records (EMR)</li>
+            <li>Accounts</li>
+          </ul>
+      </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>4. What information is included in the Patient Card?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>The Patient Card provides a quick overview of the patient's basic information, clinical history, and contact details for easy reference.</p>
+      </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>5. How do I register a new patient?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Go to the Patient Registration section to input new patient details such as:</p>
+          <ul>
+            <li>Name</li>
+            <li>Contact Information</li>
+            <li>Demographics</li>
+            <li>Medical History</li>
+          </ul>
+      </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>6. How are appointments scheduled?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>In the Patient Appointment module, you can:</p>
+          <ul>
+            <li>Schedule new appointments</li>
+            <li>View upcoming appointments</li>
+            <li>Modify or cancel existing bookings</li>
+          </ul>
+      </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>7. What features are available in the Electronic Medical Record (EMR) section?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>The EMR section includes:</p>
+          <ul>
+            <li>Nursing and Vitals:
+              <ul>
+                <li>Nursing Notes</li>
+                <li>Previous Notes (Addendum)</li>
+              </ul>
+            </li>
+            <li>Consultation:
+              <ul>
+                <li>Doctor’s Notes</li>
+              </ul>
+            </li>
+            <li>SOAP Notes</li>
+            <li>Drawing Tool for clinical illustrations</li>
+            <li>Customized Pages tailored to specific clinic needs</li>
           </ul>
         </div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Do you serve clients in the UAE or Middle East?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes! We deliver healthcare software in UAE, including EHR software tailored for Dubai and other Middle East regions, ensuring compliance with local regulations and language needs.</div>
+        <button class="faq-question" aria-expanded="false">
+          <span>8. Can we customize the EMR for our clinic?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Yes, Capsule  allows clinics to add Customized Additional Pages to meet their specific operational or clinical requirements.</p>
+      </div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What makes TenderCare different from other medical software providers?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare offers a comprehensive, cloud-based medical software suite with fully customizable modules for EHR, billing, scheduling, telemedicine, lab, and pharmacy—designed for clinics and hospitals of all sizes, especially in the UAE and Middle East.</div>
+        <button class="faq-question" aria-expanded="false">
+          <span>9. How is the billing managed?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>The Accounts section provides a snapshot of the patient's Running Balance, helping administrative staff track billing and payment history.</p>
+      </div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Does TenderCare offer multi-specialty clinic support?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. Our clinic management system supports multiple specialties like general medicine, dermatology, pediatrics, gynecology, and dentistry—all with separate workflows, prescription formats, and reports.</div>
+        <button class="faq-question" aria-expanded="false">
+          <span>10. What if I forget my password or can’t log in?</span>
+          <i class="bi bi-chevron-down faq-toggle"></i>
+        </button>
+        <div class="faq-answer">
+          <p>Please contact your system administrator or IT support team for password resets or login issues.</p>
       </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Can TenderCare be integrated with existing hospital systems?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Absolutely. TenderCare is designed for EHR integration, supporting HL7, FHIR, and custom APIs to connect with your lab systems, PACS, radiology tools, pharmacy inventory, and other third-party applications.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Does TenderCare offer multilingual support?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes, our system is optimized for both English and Arabic, with the ability to add more languages if required—ideal for healthcare providers in the UAE and GCC region.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How does TenderCare support teleconsultations?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare includes a built-in telemedicine platform that enables video calls, document sharing, e-prescriptions, and appointment scheduling—all through a secure and encrypted interface.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Is patient data stored securely in TenderCare?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. We follow strict data privacy standards, including end-to-end encryption, regular backups, role-based access control, and full HIPAA compliance to safeguard your patients’ information.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Can patients access their records using TenderCare?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes, we offer a patient portal where patients can view their medical records, book appointments, receive test results, and communicate with doctors securely.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What devices or platforms does TenderCare support?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare runs on web browsers, tablets, and mobile devices (Android & iOS), ensuring doctors and staff can access critical data from anywhere, anytime.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How scalable is TenderCare’s software?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare is highly scalable—it’s suitable for small clinics, multi-specialty centers, and large hospitals, with the ability to add new modules, users, and branches easily as your organization grows.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Does TenderCare provide analytics and reporting tools?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. We offer real-time analytics dashboards and custom reporting tools for patient records, revenue cycles, appointment trends, and resource utilization to support better decision-making.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How does TenderCare help reduce administrative workload?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">TenderCare automates routine processes like appointment booking, billing, inventory tracking, and lab test management, freeing up your staff’s time and reducing human error.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>How can I get a demo of the TenderCare system?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">You can request a free personalized demo by contacting our team through the website or emailing us. We’ll walk you through how TenderCare can be tailored to your practice.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Does TenderCare support online payments?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes, our system can be integrated with online payment gateways so that patients can pay for consultations, tests, and procedures directly through the patient portal.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>Can TenderCare help with insurance claims and processing?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">Yes. TenderCare includes an insurance claim management system that automates claim creation, submission, and tracking—reducing rejection rates and speeding up settlements.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" aria-expanded="false"><span>What kind of training and support does TenderCare offer?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-answer">We provide onboarding training, 24/7 customer support, a detailed user manual, and ongoing updates—ensuring that your staff is confident and your system stays up-to-date.</div>
       </div>
       <!-- FAQ items end -->
     </div>
   </div>
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
   <script>
-    // FAQ accordion logic
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const item = this.parentElement;
-        const open = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        if (!open) item.classList.add('open');
+    // Initialize AOS after page load
+    window.addEventListener('load', function() {
+      AOS.init({
+        duration: 800,
+        once: true,
+        easing: 'ease-out-quart'
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const faqItems = document.querySelectorAll('.faq-item');
+      const searchInput = document.getElementById('faqSearch');
+      
+      // Initialize AOS (Animate On Scroll)
+      if (typeof AOS !== 'undefined') {
+        AOS.init({
+          duration: 800,
+          once: true,
+          easing: 'ease-out-quart'
+        });
+      }
+
+      // Toggle FAQ items
+      function toggleFAQ(item) {
+        const wasOpen = item.classList.contains('open');
+        const questionButton = item.querySelector('.faq-question');
+        
+        // Close all other items
+        if (!wasOpen) {
+          faqItems.forEach(i => {
+            if (i !== item) {
+              i.classList.remove('open');
+              i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+        
+        // Toggle the clicked item
+        item.classList.toggle('open');
+        questionButton.setAttribute('aria-expanded', !wasOpen);
+        
+        // Add animation class
+        item.classList.add('was-toggled');
+        setTimeout(() => item.classList.remove('was-toggled'), 300);
+      }
+
+      // Search functionality
+      function filterFAQs(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        
+        faqItems.forEach(item => {
+          const question = item.querySelector('.faq-question').textContent.toLowerCase();
+          const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+          
+          if (question.includes(term) || answer.includes(term)) {
+            item.style.display = '';
+            if (!item.classList.contains('open') && term.length > 0) {
+              item.classList.add('open');
+              item.querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+            }
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+
+      // Event Listeners
+      faqItems.forEach(item => {
+        const questionButton = item.querySelector('.faq-question');
+        questionButton.addEventListener('click', () => toggleFAQ(item));
+        
+        // Keyboard navigation
+        questionButton.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleFAQ(item);
+          }
+        });
+      });
+
+      // Search input handler
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          filterFAQs(e.target.value);
+        });
+        
+        // Add clear button functionality
+        const clearSearch = document.createElement('span');
+        clearSearch.className = 'clear-search';
+        clearSearch.innerHTML = '&times;';
+        clearSearch.style.display = 'none';
+        clearSearch.style.position = 'absolute';
+        clearSearch.style.right = '15px';
+        clearSearch.style.top = '50%';
+        clearSearch.style.transform = 'translateY(-50%)';
+        clearSearch.style.cursor = 'pointer';
+        clearSearch.style.color = '#adb5bd';
+        clearSearch.style.fontSize = '1.5rem';
+        clearSearch.style.lineHeight = '1';
+        clearSearch.style.transition = 'color 0.2s';
+        
+        searchInput.parentNode.style.position = 'relative';
+        searchInput.parentNode.appendChild(clearSearch);
+        
+        clearSearch.addEventListener('mouseover', () => {
+          clearSearch.style.color = '#ff6600';
+        });
+        
+        clearSearch.addEventListener('mouseout', () => {
+          clearSearch.style.color = '#adb5bd';
+        });
+        
+        clearSearch.addEventListener('click', () => {
+          searchInput.value = '';
+          clearSearch.style.display = 'none';
+          filterFAQs('');
+          searchInput.focus();
+        });
+        
+        searchInput.addEventListener('input', (e) => {
+          clearSearch.style.display = e.target.value ? 'block' : 'none';
+        });
+      }
+
+      // Open first question by default
+      if (faqItems.length > 0) {
+        faqItems[0].classList.add('open');
+        faqItems[0].querySelector('.faq-question').setAttribute('aria-expanded', 'true');
+      }
+      
+      // Add animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      
+      faqItems.forEach(item => {
+        observer.observe(item);
       });
     });
   </script>
+  
+  <!-- Add AOS animation library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .faq-item {
+      animation-delay: calc(var(--index) * 0.1s);
+    }
+  </style>
+</body>
+  <!-- Add smooth scrolling -->
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+  
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
 </body>
 </html> 

@@ -1,21 +1,107 @@
-# Enforce HTTPS
-RewriteEngine On
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Enable rewrite engine and HTTPS redirect
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Force HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Enable HTTP/2 and HTTP/3
+    <IfModule mod_http2.c>
+        Protocols h2 h2c http/1.1
+    </IfModule>
+</IfModule>
 
 # Security Headers
-Header always set X-Frame-Options "SAMEORIGIN"
-Header set X-Content-Type-Options "nosniff"
-Header set X-XSS-Protection "1; mode=block"
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-Header set Referrer-Policy "no-referrer-when-downgrade"
-Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.jsdelivr.net"
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header set Referrer-Policy "no-referrer-when-downgrade"
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com"
+    
+    # Enable CORS for fonts
+    <FilesMatch "\.(eot|otf|ttf|woff|woff2)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# Enable compression
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    
+    # Remove browser bugs
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# Browser caching and cache control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Default expiration: 1 week
+    ExpiresDefault "access plus 1 week"
+    
+    # HTML: no cache for dynamic content
+    ExpiresByType text/html "access plus 0 seconds"
+    
+    # CSS, JavaScript, and other assets
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    
+    # Media files
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Web fonts
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+    ExpiresByType application/x-font-ttf "access plus 1 year"
+    ExpiresByType font/opentype "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    
+    # Other
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+</IfModule>
 
 # Disable directory listing
 Options -Indexes
 
 # Block access to sensitive files
 <FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh|bak|inc|swp|dist|sql)$">
-  Order Allow,Deny
-  Deny from all
-</FilesMatch> 
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

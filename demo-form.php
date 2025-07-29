@@ -7,7 +7,7 @@
   <title>Book a Demo | Tendercare</title>
   <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/main.min.css">
   <style>
     .custom-country-dropdown {
       position: relative;

@@ -1,10 +1,24 @@
 <?php
 // --- CONFIG AND HEADERS ---
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/forms/error.log');
+
+// Create error log directory if it doesn't exist
+if (!file_exists(__DIR__ . '/forms')) {
+    mkdir(__DIR__ . '/forms', 0755, true);
+}
+
+// Function to log errors with timestamp
+function logError($message) {
+    $logFile = __DIR__ . '/forms/email_errors.log';
+    $timestamp = date('Y-m-d H:i:s');
+    $logMessage = "[$timestamp] $message\n";
+    error_log($logMessage, 3, $logFile);
+    error_log($logMessage); // Also log to default error log
+}
 
 header('Content-Security-Policy: default-src \'self\'; script-src \'self\' https://www.google.com https://www.gstatic.com; style-src \'self\' https://fonts.googleapis.com https://www.gstatic.com; font-src \'self\' https://fonts.gstatic.com; img-src \'self\' data:;');
 header('X-Frame-Options: DENY');
@@ -16,8 +30,26 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
 }
 // --- END OF CONFIG AND HEADERS ---
 
-require_once __DIR__ . '/forms/config.php';
+// Start session and load config
 session_start();
+
+try {
+    // Load configuration
+    $configFile = __DIR__ . '/forms/config.php';
+    if (!file_exists($configFile)) {
+        throw new Exception('Config file not found: ' . $configFile);
+    }
+    require_once $configFile;
+    
+    // Log environment status
+    logError('Environment loaded. SMTP Host: ' . (getenv('SMTP_HOST') ?: 'Not set'));
+    logError('SMTP Username: ' . (getenv('SMTP_USERNAME') ? 'Set' : 'Not set'));
+    
+} catch (Exception $e) {
+    logError('Configuration error: ' . $e->getMessage());
+    http_response_code(500);
+    exit('Configuration error. Please try again later.');
+}
 
 if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
     http_response_code(403);
@@ -157,14 +189,36 @@ $mail->Timeout = 10;
 // };
 
 try {
-    // Server settings
+    // Log email attempt
+    logError('Attempting to send admin email to: ' . $fields['Email']);
+    
+    // Server settings with error logging
     $mail->isSMTP();
     $mail->Host = getenv('SMTP_HOST') ?: 'mail.tendercare.ae';
     $mail->SMTPAuth = true;
-    $mail->Username = getenv('SMTP_USER');
-    $mail->Password = getenv('SMTP_PASS');
-    $mail->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Username = getenv('SMTP_USERNAME') ?: 'sales@tendercare.ae';
+    $mail->Password = getenv('SMTP_PASSWORD') ?: 'Tender302025';
+    $mail->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: 'ssl';
     $mail->Port = getenv('SMTP_PORT') ?: 465;
+    $mail->SMTPOptions = [
+        'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        ]
+    ];
+    
+    // Enable debug output
+    $mail->SMTPDebug = 2;
+    $mail->Debugoutput = function($str, $level) {
+        $logMessage = "PHPMailer: $str";
+        logError($logMessage);
+        error_log($logMessage);
+    };
+    
+    // Log SMTP settings (without password)
+    logError('SMTP Settings - Host: ' . $mail->Host . ', Port: ' . $mail->Port . 
+             ', Secure: ' . $mail->SMTPSecure);
 
     // Recipients
     $mail->setFrom('sales@tendercare.ae', 'Tendercare Website');
@@ -180,23 +234,30 @@ try {
     $mail->Body = $html;
     $mail->send();
 
-    // --- Send Confirmation Email to User ---
+    // Send confirmation email to user
     try {
-        $mailUser = new PHPMailer(true);
-        $mailUser->Timeout = 10;
+      logError('Attempting to send confirmation email to: ' . $fields['Email']);
+      $mailUser = new PHPMailer(true);
+      $mailUser->Timeout = 10;
         // $mailUser->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
         // $mailUser->Debugoutput = function($str, $level) {
         //     file_put_contents(__DIR__ . '/forms/smtp_debug.log', date('Y-m-d H:i:s') . " - " . $str, FILE_APPEND);
         // };
 
-        // Server settings from .env
+        // Server settings from .env with error logging
         $mailUser->isSMTP();
-        $mailUser->Host = getenv('SMTP_HOST');
+        $mailUser->Host = getenv('SMTP_HOST') ?: 'mail.tendercare.ae';
         $mailUser->SMTPAuth = true;
-        $mailUser->Username = getenv('SMTP_USER');
-        $mailUser->Password = getenv('SMTP_PASS');
-        $mailUser->SMTPSecure = getenv('SMTP_ENCRYPTION');
-        $mailUser->Port = getenv('SMTP_PORT');
+        $mailUser->Username = getenv('SMTP_USERNAME') ?: 'sales@tendercare.ae';
+        $mailUser->Password = getenv('SMTP_PASSWORD') ?: 'Tender302025';
+        $mailUser->SMTPSecure = getenv('SMTP_ENCRYPTION') ?: 'ssl';
+        $mailUser->Port = getenv('SMTP_PORT') ?: 465;
+        
+        // Enable debug output
+        $mailUser->SMTPDebug = 2;
+        $mailUser->Debugoutput = function($str, $level) {
+            error_log("PHPMailer (User): $str");
+        };
 
         // Recipient
         $mailUser->setFrom(getenv('SMTP_USER'), 'Tendercare');
@@ -217,7 +278,7 @@ try {
         $mailUser->Subject = 'Confirmation: We\'ve Received Your Demo Request';
         $mailUser->Body    = $userHtmlBody;
         $mailUser->send();
-    } catch (Exception $e) {
+      } catch (Exception $e) {
         // Log error but don't fail the request
         error_log("Could not send confirmation email to " . $fields['Email'] . ": " . $mailUser->ErrorInfo);
     }
