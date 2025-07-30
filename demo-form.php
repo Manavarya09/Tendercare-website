@@ -116,7 +116,6 @@
           <li><a href="index.html#products">Products</a></li>
           <li><a href="index.html#features">Features</a></li>
           <li><a href="index.html#testimonials">Testimonials</a></li>
-          <li><a href="about.html">Our Team</a></li>
           <li><a href="index.html#contact">Contact</a></li>
           <li class="d-xl-none mobile-demo-btn">
             <a href="demo-form.php" class="btn-getstarted-mobile active">

@@ -1,9 +1,9 @@
 /* Move all @import rules to the top of the file
 
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Nunito",  sans-serif;
-  --nav-font: "Inter",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Nunito", sans-serif;
+  --nav-font: "Inter", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -59,7 +59,26 @@ body {
   color: var(--default-color);
   background: var(--background-color);
   font-family: var(--default-font);
+  font-size: 16px;
+  line-height: 1.6;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure headings use the correct font */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--heading-color);
+}
+
+/* Navigation font */
+.navbar, .navmenu {
+  font-family: var(--nav-font);
+  font-weight: 500;
 }
 
 section {
@@ -2111,17 +2130,19 @@ section,
 }
 
 .testimonials .testimonial-item .testimonial-img {
-  width: 90px;
-  border-radius: 50%;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 120px;
   margin: 0 auto 15px auto;
-  transition: all 0.4s ease;
-  border: 3px solid rgba(255, 255, 255, 0.8);
+  display: block;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .testimonials .testimonial-item:hover .testimonial-img {
-  transform: scale(1.1);
-  border-color: var(--accent-color);
-  box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+  transform: none;
 }
 
 .testimonials .testimonial-item h3 {
@@ -4598,9 +4619,14 @@ input.no-spinner[type=number] {
 }
 
 .leader-img {
-  border: 3px solid var(--accent-color) !important;
-  border-radius: 50%;
+  border: none !important;
+  border-radius: 0 !important;
   box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  margin: 0 auto;
+  display: block;
 }
 
 .bio-modal-photo {
