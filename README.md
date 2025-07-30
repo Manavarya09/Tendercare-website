@@ -39,30 +39,93 @@ flowchart TD
 - SQLite for data storage
 - CSRF protection and input sanitization
 
-## 🚀 Getting Started
+## 🚀 Local Development Setup
 
-### Prerequisites
-- PHP 7.4 or higher
-- Web server (Apache/Nginx)
-- Composer (for PHP dependencies)
+### 🛠 Prerequisites
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Manavarya09/Tendercare-website.git
-   cd Tendercare-website
-   ```
+Before you begin, ensure you have the following installed on your system:
 
-2. Install PHP dependencies:
-   ```bash
-   composer install
-   ```
+1. **Web Server Software** (Choose one):
+   - [XAMPP](https://www.apachefriends.org/) (Windows/macOS/Linux)
+   - [MAMP](https://www.mamp.info/) (macOS/Windows)
+   - [WAMP](https://www.wampserver.com/) (Windows)
+   - [Laragon](https://laragon.org/) (Windows)
 
-3. Configure your web server to point to the project directory
+2. **PHP 7.4 or higher**
+   - Included in XAMPP/MAMP/WAMP
+   - Or install separately: [PHP Downloads](https://windows.php.net/download/)
 
-4. Update the following files with your configuration:
-   - `forms/contact.php` - Update email settings
-   - Update Google Maps API key in relevant files
+3. **Composer** (PHP package manager)
+   - [Download Composer](https://getcomposer.org/download/)
+
+4. **Text Editor** (Recommended):
+   - [VS Code](https://code.visualstudio.com/)
+   - [Sublime Text](https://www.sublimetext.com/)
+   - [PHPStorm](https://www.jetbrains.com/phpstorm/)
+
+### 🔧 Installation Steps
+
+#### Method 1: Using XAMPP (Recommended for Beginners)
+
+1. **Install XAMPP**
+   - Download from [XAMPP official website](https://www.apachefriends.org/)
+   - Run the installer with default settings
+   - Start Apache and MySQL services from the XAMPP Control Panel
+
+2. **Extract the Project**
+   - Extract the downloaded ZIP file to: `C:\xampp\htdocs\Tendercare` (Windows) or `/Applications/XAMPP/htdocs/Tendercare` (macOS)
+
+3. **Install Dependencies**
+   - Open Command Prompt/Terminal
+   - Navigate to the project directory
+   - Run: `composer install`
+
+4. **Configure PHP Mail (Optional)**
+   - Open `php.ini` in your XAMPP PHP directory
+   - Find `[mail function]` and configure SMTP settings
+   - Or use a service like [Mailtrap](https://mailtrap.io/) for testing
+
+5. **Start the Development Server**
+   - Open browser and go to: `http://localhost/Tendercare`
+
+#### Method 2: Using Built-in PHP Server (For Quick Testing)
+
+1. **Extract the ZIP file** to your preferred directory
+
+2. **Open Terminal/Command Prompt**
+   - Navigate to the project directory
+   - Run: `composer install`
+   - Then run: `php -S localhost:8000`
+
+3. **Access the website** at: `http://localhost:8000`
+
+### ⚙️ Configuration
+
+1. **Email Settings**
+   - Open `forms/contact.php`
+   - Update the SMTP settings with your email configuration
+   - For testing, you can use Mailtrap
+
+2. **Google Maps API**
+   - Get an API key from [Google Cloud Console](https://console.cloud.google.com/)
+   - Replace `YOUR_GOOGLE_MAPS_API_KEY` in relevant files
+
+### 🐛 Troubleshooting
+
+1. **PHP Not Found**
+   - Ensure PHP is added to your system PATH
+   - Restart your terminal after installation
+
+2. **Composer Not Found**
+   - Reinstall Composer and check "Add to PATH" during installation
+
+3. **Email Not Sending**
+   - Check SMTP settings in `contact.php`
+   - Ensure your local server can send emails or use Mailtrap
+
+4. **Page Not Loading**
+   - Make sure your web server is running
+   - Check for any PHP errors in the server logs
 
 ## 📂 Project Structure
 
