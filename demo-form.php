@@ -5,6 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book a Demo | Tendercare</title>
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+  <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+  <link rel="mask-icon" href="assets/img/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="assets/css/main.min.css">
@@ -108,7 +116,7 @@
           <li><a href="index.html#products">Products</a></li>
           <li><a href="index.html#features">Features</a></li>
           <li><a href="index.html#testimonials">Testimonials</a></li>
-          <li><a href="about.html">About Us</a></li>
+          <li><a href="about.html">Our Team</a></li>
           <li><a href="index.html#contact">Contact</a></li>
           <li class="d-xl-none mobile-demo-btn">
             <a href="demo-form.php" class="btn-getstarted-mobile active">
@@ -393,7 +401,7 @@
   </main>
   <footer id="footer" class="footer">
     <div class="container copyright text-center mt-4 position-relative">
-      <p class="mb-0">© Copyright <span>Tendercare</span> All Rights Reserved</p>
+      <p class="mb-0">©<span>Tendercare FZE 2025</span> All Rights Reserved</p>
       <div style="margin-top: 8px; font-size: 1.1em; color: #ff6600; font-weight: bold; letter-spacing: 1px;"></div>
       <a href="faq.html" target="_blank" class="faq-footer-link">FAQ</a>
     </div>
