@@ -15,7 +15,7 @@
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="assets/css/main.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
   <style>
     .custom-country-dropdown {
       position: relative;
